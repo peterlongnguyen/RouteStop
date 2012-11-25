@@ -4,18 +4,15 @@ block prepend head
 
 block append content
 	h1= title
-	p Welcome to #{title}
-	p This world is mine!
+	p Plan your roadtrip now!
 
-	div#map_canvas(style:"width:500px; height: 350px;")
+	#map_canvas(style:'width:500px; height: 350px;'')
 		hello world here!
 
-	div#control_panel(style:"topfloat:left;width:300px;text-align:left;padding-top:20px")
-		div(style:"margin:20px;border-width:2px;")
-			div(style:"background-color:blue;")
-				form(method='post',action='')
-				label(for='name') Name:
-				input(type='text, name='name', id='name')        
-				label(for='email') Email:
-				input(type='text', name='email', id='email')  
-				input(type='submit', name='submit', value='Submit', data-inline='true').submit-button
+	#main_menu
+		form(method='post',action='')
+		label(for='name') Name:
+		input(type='text, name='name', id='name')        
+		label(for='email') Email:
+		input(type='text', name='email', id='email')  
+		input(type='submit', name='submit', value='Submit', data-inline='true').submit-button
