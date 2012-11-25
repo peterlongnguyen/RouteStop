@@ -4,7 +4,7 @@
   var markersArray = [];
   var resultsInEachBox = 1; // for dev purposes, how many results to show in each division box along the route
   var distance = 5; // km
-  distance *= 1.60934; // conversion to km, which google uses as default
+  distance *= 1.60934; // conversion to km
   var infowindow; // used to know which one is currently open to close when another is opened
   var waypts = []; // stops along the way
 
@@ -236,3 +236,4 @@
       foobar_cont(el); 
     }, 5000); 
   }
+

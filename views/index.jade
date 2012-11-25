@@ -3,16 +3,21 @@ extends layout
 block prepend head
 
 block append content
-	h1= title
-	p Plan your roadtrip now!
+	div#content_header
+		h1= title
+		p Plan your roadtrip now!
 
-	#map_canvas(style:'width:500px; height: 350px;'')
-		hello world here!
+	div#map_canvas(style:'width:500px; height: 350px;'')
 
-	#main_menu
-		form(method='post',action='')
-		label(for='name') Name:
-		input(type='text, name='name', id='name')        
-		label(for='email') Email:
-		input(type='text', name='email', id='email')  
-		input(type='submit', name='submit', value='Submit', data-inline='true').submit-button
+	div#main_menu
+		form(method='post', action='main_menu')
+			label(for='start') Start:
+			input(type='text, name='start', id='start')        
+			label(for='end') End:
+			input(type='text', name='end', id='end')
+			label(for='stop') Stop: 
+			input(type='text', name='place', id='place', value='in-n-out burger')
+			input(type='button', onclick='pushWaypoint()', value='Add Stop', data-inline='true')
+			input(type='submit', name='submit', value='Submit', data-inline='true').submit-button
+
+	div#directions_panel

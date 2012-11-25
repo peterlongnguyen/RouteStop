@@ -21,6 +21,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(__dirname + '/public'));
   app.use(require('stylus').middleware(__dirname + '/public'));
 });
 
@@ -31,6 +32,10 @@ app.configure('development', function(){
 app.get('/', routes.index);
 
 app.get('/users', user.list);
+
+app.post('/main_menu', function(req, res) {
+    console.log('Place: ' + req.body.place);
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
