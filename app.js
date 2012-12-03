@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , citygridAPI = require('./models/citygridAPI')
   , http = require('http')
   , path = require('path');
 
@@ -33,8 +34,8 @@ app.get('/', routes.index);
 
 app.get('/users', user.list);
 
-app.post('/main_menu', function(req, res) {
-    console.log('Place: ' + req.body.place);
+app.post('/citygrid', function(req, res) {
+  citygridAPI.lookupStops(req, res);
 });
 
 http.createServer(app).listen(app.get('port'), function(){

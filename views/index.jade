@@ -7,17 +7,21 @@ block append content
 		h1= title
 		p Plan your roadtrip now!
 
-	div#map_canvas(style:'width:500px; height: 350px;'')
-
 	div#main_menu
-		form(method='post', action='main_menu')
+		form(method='post', action='citygrid', id='route')
 			label(for='start') Start:
-			input(type='text, name='start', id='start')        
+			input(type='text', name='start', id='start', value='san francisco')        
 			label(for='end') End:
-			input(type='text', name='end', id='end')
+			input(type='text', name='end', id='end', value='los angeles')
 			label(for='stop') Stop: 
 			input(type='text', name='place', id='place', value='in-n-out burger')
+			input(type='hidden', name='params', id='params')
 			input(type='button', onclick='pushWaypoint()', value='Add Stop', data-inline='true')
-			input(type='submit', name='submit', value='Submit', data-inline='true').submit-button
+
+		input(type='button', onclick='calcRoute()', name='submit', value='Submit', data-inline='true').submit-button
 
 	div#directions_panel
+
+
+	|<ul id="sortable" >
+	|</ul>	
