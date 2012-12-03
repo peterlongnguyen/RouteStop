@@ -14,8 +14,13 @@
       var infowindow; // used to know which one is currently open to close when another is opened
       var waypts = []; // stops along the way
 
+      function reset() {
+        clearWaypoints();
+      }
+
       // initializes google maps with LA as the default center
       function initialize() {
+        reset();
         directionsDisplay = new google.maps.DirectionsRenderer();
         var losangeles = new google.maps.LatLng(34.0522, -118.2428);
         var mapOptions = {
@@ -58,38 +63,56 @@
             waypts.push(stopLoc);
         });
         
+        // request to find google maps route, which will be boxed
         var request = {
             origin: start,
             destination: end,
             travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
         
-        var boxes, routeResponse;
         directionsService.route(request, function(response, status) {
           if (status == google.maps.DirectionsStatus.OK) {
             // variables used in searching stops along the way
-            routeResponse = response;
-            boxes = boxRoute(response);
-             // alert(boxes.length);
+            var routeResponse = response;
+            var boxes = boxRoute(response);
+            var stops = jQuery.extend(true, [], waypts);
+
+            var directions = [];
+            for (var i = 0; i < boxes.length; i++) {
+              var boundaries = boxes[i];
+              // Perform search over this bounds
+
+              // extract degree of each direction and push into directions array
+              var N = boundaries.getNorthEast().lat().toString();
+              var S = boundaries.getSouthWest().lat().toString();
+              var E = boundaries.getNorthEast().lng().toString();
+              var W = boundaries.getSouthWest().lng().toString();
+
+              directions.push({
+                'N': N,
+                'S': S,
+                'E': E,
+                'W': W
+              });
+            }
+
+            var params = {
+              'waypts': stops,
+              'boxes': directions,
+              'route': routeResponse
+            };
+
+            var placesData = JSON.stringify(params);
+            document.getElementById('params').value = placesData;
+            document.getElementById("route").submit();
+
           } else {
              // alert('Finding route: ' + status);
           }
-        });
-        
-        clearWaypoints();
-
-        var params = {
-          'stops': waypts,
-          'boxes': boxes,
-          'route': routeResponse
-        };
-
-        var placesData = JSON.stringify(params);
-        document.getElementById('params').value = placesData;
-        document.getElementById("route").submit();
+        });        
       }
 
-      // takes a response from google and creates rectangular boxes along the path
+      // takes a response (route) from google and creates rectangular boxes along the path
       function boxRoute(response) {
         var routeBoxer = new RouteBoxer();
         // Box the overview path of the first route
