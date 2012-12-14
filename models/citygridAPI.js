@@ -26,7 +26,7 @@ exports.lookupStops = function(req, res){
 
         console.log('Directions: ' + N + ' ' + S + ' ' + E + ' ' + W);
 
-        // loop again and search every place
+        // loop again and search for every waypoint
         for(var j = 0; j < waypts.length; j++) {
 
         	console.log('waypoint: ' + waypts[j]);
@@ -51,7 +51,7 @@ exports.lookupStops = function(req, res){
 				request_counter++;
 				var requests_progress_pct = getPercent(request_counter, total_requests);
 				console.log(requests_progress_pct + '%');
-				
+
 				// continues ahead after last callback
 				// @todo: need to check data integrity, especiall if errorcode
 				if(request_counter == (total_requests)) {

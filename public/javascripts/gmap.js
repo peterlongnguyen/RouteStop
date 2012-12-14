@@ -102,6 +102,7 @@
               'route': routeResponse
             };
 
+            // convert boxes, stops, and route to JSON and insert back into form to submit
             var placesData = JSON.stringify(params);
             document.getElementById('params').value = placesData;
             document.getElementById("route").submit();
