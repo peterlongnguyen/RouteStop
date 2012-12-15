@@ -6,9 +6,9 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
-  , citygridAPI = require('./models/citygridAPI')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , citygridController = require('./controllers/citygridController');
 
 var app = express();
 
@@ -30,13 +30,13 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// routes
+app.post('/citygrid', function(req, res) {
+  citygridController.GETStopsFromCityGrid(req, res);
+});
+app.get('/users', user.list);
 app.get('/', routes.index);
 
-app.get('/users', user.list);
-
-app.post('/citygrid', function(req, res) {
-  citygridAPI.lookupStops(req, res);
-});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
