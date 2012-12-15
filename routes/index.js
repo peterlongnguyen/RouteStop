@@ -13,5 +13,4 @@ exports.loading = function(req, res) {
 
 exports.renderMap = function(req, res) {
 
-	
-}
+};

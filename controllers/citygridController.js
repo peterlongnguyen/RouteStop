@@ -2,6 +2,7 @@ var citygridModel = require('../models/citygridModel');
 
 exports.GETStopsFromCityGrid = function(req, res) {
 	citygridModel.lookupStops(req, res, printData);
+	res.render('map', { title: 'RouteStop' });
 };
 
 function printData(data, progressPercent) {
