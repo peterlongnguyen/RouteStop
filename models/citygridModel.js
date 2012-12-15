@@ -43,7 +43,7 @@ exports.lookupStops = function(req, res, callback){
 			request(get_request, function (error, response, body) {
 				if (!error && response.statusCode == 200) {
 					// console.log(body) // Print the google web page.
-					callback(body, requests_progress_pct);
+					callback(body, requests_progress_pct, params);
 					
 					var end_time = new Date().getTime();
 					var time = end_time - start_time;

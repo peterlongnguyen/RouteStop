@@ -1,13 +1,32 @@
-extends layout
+doctype 5
+html
+	head
+		script(type='text/javascript', src='http://maps.googleapis.com/maps/api/js?sensor=false')
+		script(type='text/javascript', src='/javascripts/map.js')
+		link(rel='stylesheet', href='http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css')
+		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(type='text/javascript', src='http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js')
 
-block prepend head
+		script
+			start = '#{start}'; 
+			end = '#{end}';
 
-block append content
-	div#main_menu
-		| <div id="map_canvas" style="width:100%;height:340px;"></div>
-		| </body>
 
-	div#content_header
+	body(onload='initialize()')
+		script
+			calcRoute();
+
+		div#main_menu
+			| <div id="map_canvas" style="width:100%;height:340px;"></div>
+			| </body>
+
+		div#content_header
 			h1= ''
+
+		div#directions_panel
+
+	
+
 
 	
