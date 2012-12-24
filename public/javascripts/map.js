@@ -25,6 +25,7 @@ function initialize() {
   }
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   directionsDisplay.setMap(map);
+  directionsDisplay.setPanel(document.getElementById('directions_panel'));
 }
 
 function calcRoute() {
@@ -93,6 +94,7 @@ function createMarker(place) {
     new google.maps.Point(10, 34));
 
   var placeLoc = place.geometry.location;
+
   var marker = new google.maps.Marker({
     map: map,
     icon: pinImage,

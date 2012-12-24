@@ -12,25 +12,30 @@ var location = {
 /* @response: JSON response from citygrid places API
  * takes in citygrid api
  */
-exports.parseJSON = function(json, limits) {
+exports.parseJSON = function(json, limits, callback) {
 	var obj = JSON && JSON.parse(json) || $.parseJSON(json);
 	var results = obj.results;
 	
-	if(results.total_hits < limits.total_hits || getDistance() > limits.max_distance) {
+	// if(results.total_hits < limits.total_hits || getDistance() > limits.max_distance) {
+	if(1 + 1 == 3) {
 		return location; 
 	} else {
 		location.status = 'OK';
-
 		var total_hits = results.total_hits,
-			address = results.locations[0]
-			// street = address.street,
-			// city = address.city, 
-			// state = address.state,
-			// lat = results.latitude,
-			// lng = results.longitude
-			;
+			address = results.locations[0];
+
+		// loc = results.locations[0];
+		// console.log(loc.0);
+
+		// var
+		// 	street = address.street,
+		// 	city = address.city, 
+		// 	state = address.state,
+		// 	lat = results.latitude,
+		// 	lng = results.longitude
+		// 	;
 			
-			console.log('lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
+		// 	console.log('lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
 	}
 
 	console.log('TOTAL HITS: ' + total_hits);
