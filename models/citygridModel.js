@@ -10,8 +10,9 @@ exports.lookupStops = function(req, res, callback){
 	console.log('boxes: ' + boxes.length + ' waypts: ' + waypts.length);
 	var start_time = new Date().getTime();
 
-	var   request_counter = 0
-		, total_requests = (boxes.length * waypts.length); 
+	var request_counter = 0,
+		requests_progress_pct = 0,
+		total_requests = (boxes.length * waypts.length); 
 
 	// loop through all boxes along path
 	for(var i = 0; i < boxes.length; i++) {
@@ -24,12 +25,12 @@ exports.lookupStops = function(req, res, callback){
         var E = boundaries.E;
         var W = boundaries.W;
 
-        console.log('Directions: ' + N + ' ' + S + ' ' + E + ' ' + W);
+        // console.log('Directions: ' + N + ' ' + S + ' ' + E + ' ' + W);
 
         // loop again and search for every waypoint
         for(var j = 0; j < waypts.length; j++) {
 
-        	console.log('waypoint: ' + waypts[j]);
+        	// console.log('waypoint: ' + waypts[j]);
         	// GET request to citygrid to look up places
 	        var get_request = 'http://api.citygridmedia.com/content/places/v2/search/latlon?format=json'
 	        				+ '&what=' + waypts[j] 
@@ -41,27 +42,33 @@ exports.lookupStops = function(req, res, callback){
 	        				+ '&publisher=test';
 
 			request(get_request, function (error, response, body) {
+
+				request_counter++;
+				requests_progress_pct = getPercent(request_counter, total_requests);
+				
 				if (!error && response.statusCode == 200) {
 					// console.log(body) // Print the google web page.
+					console.log('PERCENT: ' + requests_progress_pct);
 					callback(body, requests_progress_pct, params);
 					
 					var end_time = new Date().getTime();
 					var time = end_time - start_time;
-					console.log((time/1000) + ' seconds');
+					console.log('TIME: ' + (time/1000) + ' seconds');
 				}
-				request_counter++;
-				var requests_progress_pct = getPercent(request_counter, total_requests);
-				console.log(requests_progress_pct + '%');
+
+				
+				// console.log(requests_progress_pct + '%');
 
 				// continues ahead after last callback
 				// @todo: need to check data integrity, especiall if errorcode
 				if(request_counter == (total_requests)) {
-					console.log(" why hello there again!!");
+					console.log(" end of file!");
 				}
 			})
 		}
 	}
 };
+
 
 /* rounds from two decimal places of percent
  */

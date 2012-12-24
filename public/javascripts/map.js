@@ -67,7 +67,6 @@ function calcRoute() {
     var steps = response.steps[0];
     var summaryPanel = document.getElementById('directions_panel');
     summaryPanel.innerHTML = '';
-
     // For each route, display summary information.
     for (var i = 0; i < route.legs.length; i++) {
       var routeSegment = i + 1;
