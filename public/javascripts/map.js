@@ -45,7 +45,7 @@ function calcRoute() {
         origin: start,
         destination: end,
         waypoints: waypts,
-        optimizeWaypoints: false, // does not optimize because list is user-ordered
+        optimizeWaypoints: true, // does not optimize because list is user-ordered
         travelMode: google.maps.DirectionsTravelMode.DRIVING
     };
   } else {

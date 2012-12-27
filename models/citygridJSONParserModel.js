@@ -2,6 +2,8 @@
 
 var location = {
 	'status': 'EMPTY',
+	'id': '',
+	'full_address' : '',
 	'address': '',
 	'city': '',
 	'state': '',
@@ -12,7 +14,7 @@ var location = {
 /* @response: JSON response from citygrid places API
  * takes in citygrid api
  */
-exports.parseJSON = function(json, limits, callback) {
+exports.parseJSON = function(json, limits, progress, callback) {
 	var obj = JSON && JSON.parse(json) || $.parseJSON(json);
 	var results = obj.results;
 	
@@ -22,22 +24,42 @@ exports.parseJSON = function(json, limits, callback) {
 	} else {
 		location.status = 'OK';
 		var total_hits = results.total_hits,
-			address = results.locations[0];
+		loc = results.locations[0];
 
-		// loc = results.locations[0];
-		// console.log(loc.0);
+		// console.log(results);
 
-		// var
-		// 	street = address.street,
-		// 	city = address.city, 
-		// 	state = address.state,
-		// 	lat = results.latitude,
-		// 	lng = results.longitude
-		// 	;
+		if(loc) {
+			var
+				id = loc.id,
+				name = loc.name,
+				address = loc.address,
+				street = address.street,
+				city = address.city, 
+				state = address.state,
+				lat = loc.latitude,
+				lng = loc.longitude
+				;
+
+			var full_address = street + ',' + city + ',' + state;
+
+			location = {
+				'status': 'OK',
+				'id': id,
+				'full_address' : full_address,
+				'address': address,
+				'city': city,
+				'state': state,
+				'lat': lat,
+				'lng': lng
+			 };
+
+			console.log('name: ' + name + ' lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
+			callback(true, location, progress);
+		}
 			
-		// 	console.log('lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
+			
 	}
-	return location;
+	callback(false, location, progress);
 }
 
 /* calculate distance between two lat long coords, used to ensure place 
