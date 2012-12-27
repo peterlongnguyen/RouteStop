@@ -7,10 +7,12 @@ html
 		link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(type='text/javascript', src='http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js')
+		script(type='text/javascript', src='/javascripts/jquery-min.js')
 
 		script
 			start = '#{start}'; 
 			end = '#{end}';
+			waypts = '!{stops}';
 
 
 	body(onload='initialize()')

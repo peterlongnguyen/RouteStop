@@ -37,8 +37,6 @@ exports.parseJSON = function(json, limits, callback) {
 			
 		// 	console.log('lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
 	}
-
-	console.log('TOTAL HITS: ' + total_hits);
 	return location;
 }
 

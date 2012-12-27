@@ -25,12 +25,9 @@ exports.lookupStops = function(req, res, callback){
         var E = boundaries.E;
         var W = boundaries.W;
 
-        // console.log('Directions: ' + N + ' ' + S + ' ' + E + ' ' + W);
-
         // loop again and search for every waypoint
         for(var j = 0; j < waypts.length; j++) {
 
-        	// console.log('waypoint: ' + waypts[j]);
         	// GET request to citygrid to look up places
 	        var get_request = 'http://api.citygridmedia.com/content/places/v2/search/latlon?format=json'
 	        				+ '&what=' + waypts[j] 
@@ -45,7 +42,7 @@ exports.lookupStops = function(req, res, callback){
 
 				request_counter++;
 				requests_progress_pct = getPercent(request_counter, total_requests);
-				
+
 				if (!error && response.statusCode == 200) {
 					// console.log(body) // Print the google web page.
 					console.log('PERCENT: ' + requests_progress_pct);
@@ -53,7 +50,7 @@ exports.lookupStops = function(req, res, callback){
 					
 					var end_time = new Date().getTime();
 					var time = end_time - start_time;
-					console.log('TIME: ' + (time/1000) + ' seconds');
+					// console.log('TIME: ' + (time/1000) + ' seconds');
 				}
 
 				
@@ -62,7 +59,7 @@ exports.lookupStops = function(req, res, callback){
 				// continues ahead after last callback
 				// @todo: need to check data integrity, especiall if errorcode
 				if(request_counter == (total_requests)) {
-					console.log(" end of file!");
+					console.log("end of file!");
 				}
 			})
 		}
