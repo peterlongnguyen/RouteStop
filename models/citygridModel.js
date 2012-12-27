@@ -44,20 +44,17 @@ exports.lookupStops = function(req, res, callback){
 				requests_progress_pct = getPercent(request_counter, total_requests);
 
 				if (!error && response.statusCode == 200) {
-					// console.log(body) // Print the google web page.
-					console.log('PERCENT: ' + requests_progress_pct);
-					callback(body, request_counter, total_requests, params);
-					
-					var end_time = new Date().getTime();
-					var time = end_time - start_time;
-					// console.log('TIME: ' + (time/1000) + ' seconds');
+					console.log('PERCENT: ' + requests_progress_pct + '%');
+					var data = {
+						'body': body
+					};
+					callback(data, request_counter, total_requests, params);
+
+					// var end_time = new Date().getTime();
+					// var time = end_time - start_time;
 				}
 
-				
-				// console.log(requests_progress_pct + '%');
-
-				// continues ahead after last callback
-				// @todo: need to check data integrity, especiall if errorcode
+				// @todo: need to check data integrity, especially if errorcode
 				if(request_counter == (total_requests)) {
 					console.log("end of file!");
 				}

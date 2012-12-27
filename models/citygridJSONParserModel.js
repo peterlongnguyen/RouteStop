@@ -1,63 +1,51 @@
-
-
-var location = {
-	'status': 'EMPTY',
-	'id': '',
-	'full_address' : '',
-	'address': '',
-	'city': '',
-	'state': '',
-	'lat': '',
-	'lng': ''
- };
-
 /* @response: JSON response from citygrid places API
  * takes in citygrid api
  */
-exports.parseJSON = function(json, limits, progress, callback) {
-	var obj = JSON && JSON.parse(json) || $.parseJSON(json);
+exports.parseJSON = function(data, limits, progress, callback) {
+	var obj = JSON && JSON.parse(data.body) || $.parseJSON(data.body);
 	var results = obj.results;
+
+	var location = {
+		'status': 'EMPTY',
+		'key': '',
+		'id': '',
+		'street': '',
+		'city': '',
+		'state': '',
+		'full_address' : '',
+		'lat': '',
+		'lng': ''
+	 };
 	
-	// if(results.total_hits < limits.total_hits || getDistance() > limits.max_distance) {
-	if(1 + 1 == 3) {
+	if(results.total_hits == 0) { // || getDistance() > limits.max_distance) {
 		return location; 
 	} else {
 		location.status = 'OK';
 		var total_hits = results.total_hits,
-		loc = results.locations[0];
-
-		// console.log(results);
+			loc = results.locations[0];
+		// extract search key from URI
+		var uri = results.uri,
+			key = uri.substring(uri.lastIndexOf('&what=')+6, uri.indexOf('&histograms'));
 
 		if(loc) {
-			var
-				id = loc.id,
-				name = loc.name,
-				address = loc.address,
-				street = address.street,
-				city = address.city, 
-				state = address.state,
-				lat = loc.latitude,
-				lng = loc.longitude
-				;
-
-			var full_address = street + ',' + city + ',' + state;
+			var address = loc.address,
 
 			location = {
 				'status': 'OK',
-				'id': id,
-				'full_address' : full_address,
-				'address': address,
-				'city': city,
-				'state': state,
-				'lat': lat,
-				'lng': lng
+				'key': key,
+				'id': loc.id,
+				'street': address.street,
+				'city': address.city,
+				'state': address.state,
+				'full_address': '',
+				'lat': loc.latitude,
+				'lng': loc.longitude
 			 };
+			 location.full_address = location.street + ',' + location.city + ',' + location.state;
 
-			console.log('name: ' + name + ' lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
+			// console.log('name: ' + name + ' lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
 			callback(true, location, progress);
-		}
-			
-			
+		}	
 	}
 	callback(false, location, progress);
 }
