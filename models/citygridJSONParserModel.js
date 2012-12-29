@@ -1,9 +1,11 @@
+
+
 /* @response: JSON response from citygrid places API
  * takes in citygrid api
  */
 exports.parseJSON = function(data, limits, progress, callback) {
-	var obj = JSON && JSON.parse(data.body) || $.parseJSON(data.body);
-	var results = obj.results;
+	var obj = getParsedJSON(data.body),
+		results = obj.results;
 
 	var location = {
 		'status': 'EMPTY',
@@ -16,16 +18,17 @@ exports.parseJSON = function(data, limits, progress, callback) {
 		'lat': '',
 		'lng': ''
 	 };
-	
+
+	// right now only checks if results data exists, in future will apply other limits
 	if(results.total_hits == 0) { // || getDistance() > limits.max_distance) {
 		return location; 
 	} else {
 		location.status = 'OK';
 		var total_hits = results.total_hits,
 			loc = results.locations[0];
+
 		// extract search key from URI
-		var uri = results.uri,
-			key = uri.substring(uri.lastIndexOf('&what=')+6, uri.indexOf('&histograms'));
+		var key = extractSearchKeyFromURI(results.uri);
 
 		if(loc) {
 			var address = loc.address,
@@ -40,14 +43,25 @@ exports.parseJSON = function(data, limits, progress, callback) {
 				'full_address': '',
 				'lat': loc.latitude,
 				'lng': loc.longitude
-			 };
-			 location.full_address = location.street + ',' + location.city + ',' + location.state;
+			};
+			location.full_address = extractFullAddress(location);
 
-			// console.log('name: ' + name + ' lng: ' + lng + ' lat: ' + lat + ' state: ' + state + ' city: ' + city + ' street: ' + street);
 			callback(true, location, progress);
 		}	
 	}
 	callback(false, location, progress);
+}
+
+function getParsedJSON(json) {
+	return ( JSON && JSON.parse(json) || $.parseJSON(json) );
+}
+
+function extractFullAddress(location) {
+	return ( location.street + ',' + location.city + ',' + location.state );
+}
+
+function extractSearchKeyFromURI(uri) {
+	return ( uri.substring(uri.lastIndexOf('&what=')+6, uri.indexOf('&histograms')) );	
 }
 
 /* calculate distance between two lat long coords, used to ensure place 
@@ -63,7 +77,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
             Math.cos(lon2-lon1)) * R);
 }
 
-// start from center and work outwards
+// start from center and work outwards, will use in future to space out stops
 function traverseFromCenter(arr) {
 	var center = Math.floor(arr.length/2) - 1;
 	var index_right = center, index_left = center;

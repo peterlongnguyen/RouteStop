@@ -50,7 +50,7 @@ exports.lookupStops = function(req, res, callback){
 					};
 					callback(data, request_counter, total_requests, params);
 
-					// var end_time = new Date().getTime();
+					// var end_time = getUnixTimestamp();
 					// var time = end_time - start_time;
 				}
 
@@ -63,6 +63,9 @@ exports.lookupStops = function(req, res, callback){
 	}
 };
 
+function getUnixTimestamp() {
+	return ( new Date().getTime() );
+}
 
 /* rounds from two decimal places of percent
  */

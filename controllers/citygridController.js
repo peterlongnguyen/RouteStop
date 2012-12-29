@@ -1,12 +1,7 @@
 var citygridAPI = require('../models/citygridModel');
 var citygridParser = require('../models/citygridJSONParserModel');
 
-var params, apiProgress, response;
-
-var limits = {
-	'max_distance': 5,
-	'total_hits': 0,
-};
+var params, response;
 
 // invokes citygrid API model to send GET requests using the box boundaries and stop search terms.
 exports.GETStopsFromCityGrid = function(req, res) {
@@ -14,13 +9,17 @@ exports.GETStopsFromCityGrid = function(req, res) {
 	citygridAPI.lookupStops(req, res, printData);	
 };
 
+// limits/requirements to qualify results, for future use
+var limits = {
+	'max_distance': 5,
+	'total_hits': 0,
+};
 // stopLoc is the formatted, google maps-ready data structure
-var stopLoc = [],
+var stopsWaypointFormat = [],
 	stops = [];
 // callback used whenever a result is returned from a single API get request
 function printData(data, request_counter, total_requests, parameters) {
 	params = parameters;
-	// apiProgress = ((request_counter*100) / total_requests);
 
 	var progress =  {
 		'request_counter': request_counter,
@@ -31,9 +30,10 @@ function printData(data, request_counter, total_requests, parameters) {
 	passToParser(data, limits, progress, callback);
 }
 
+// pushes address into waypoint object array
 function pushStopsIntoWaypoints(stopsArray) {
 	for (var key in stopsArray) {
-		stopLoc.push({
+		stopsWaypointFormat.push({
 			location: stopsArray[key],
 			stopover: true
 		});
@@ -48,7 +48,7 @@ function passToParser(data, limits, progress, callback) {
 
 // parser's callback
 function callback(isValid, parsedlocation, progress) {
-
+	// right now isValid just means that results' data exists, will update in future to include limits/requirements
 	if(isValid) {
 		addToStopsDict(parsedlocation);
 	}
@@ -57,16 +57,17 @@ function callback(isValid, parsedlocation, progress) {
 	}
 }
 
+function renderDirections() {
+	pushStopsIntoWaypoints(stops);
+	response.render('map', { title: 'RouteStop', start: params.start, end: params.end, stops: JSON.stringify(stopsWaypointFormat) });
+}
+
+// makes sure only one of each stop type is stored
 function addToStopsDict(location) {
 	if(!(location.key in stops)) {
 		stops[location.key] = location.full_address;
-		console.log('HERE!!!');
 	}
-	console.log('stops length: ' + stops.length);
 }
 
-function renderDirections() {
-	pushStopsIntoWaypoints(stops);
-	response.render('map', { title: 'RouteStop', start: params.start, end: params.end, stops: JSON.stringify(stopLoc) });
-}
+
 
