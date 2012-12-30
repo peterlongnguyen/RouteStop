@@ -4,11 +4,12 @@ var request = require('request');
 
 exports.lookupStops = function(req, res, callback){
 	// console.log("testing passing variables: " + req.body.params);
-	var params = JSON.parse(req.body.params);
-	var boxes = params.boxes;
-	var waypts = params.waypts;
-	console.log('boxes: ' + boxes.length + ' waypts: ' + waypts.length);
-	var start_time = new Date().getTime();
+	var params = JSON.parse(req.body.params),
+		boxes = params.boxes,
+		waypts = params.waypts;
+
+	// console.log('boxes: ' + boxes.length + ' waypts: ' + waypts.length);
+	// var start_time = new Date().getTime();
 
 	var request_counter = 0,
 		requests_progress_pct = 0,
@@ -16,27 +17,26 @@ exports.lookupStops = function(req, res, callback){
 
 	// loop through all boxes along path
 	for(var i = 0; i < boxes.length; i++) {
+		// Perform search over this bounds
 		var boundaries = boxes[i];
-        // Perform search over this bounds
-
-        // get coordinate of each direction
-        var N = boundaries.N;
-        var S = boundaries.S;
-        var E = boundaries.E;
-        var W = boundaries.W;
 
         // loop again and search for every waypoint
         for(var j = 0; j < waypts.length; j++) {
 
+        	var searchParams = {
+        		'type': '',
+        		'what': waypts[j]
+        	};
+
         	// GET request to citygrid to look up places
-	        var get_request = 'http://api.citygridmedia.com/content/places/v2/search/latlon?format=json'
-	        				+ '&what=' + waypts[j] 
-	        				// + '&type=' +
-	        				+ '&lat=' + N 
-	        				+ '&lon=' + E 
-	        				+ '&lat2=' + S 
-	        				+ '&lon2=' + W 
-	        				+ '&publisher=test';
+	        var get_request = buildGETRequest(boundaries, searchParams);
+	       //  var get_request = 'http://api.citygridmedia.com/content/places/v2/search/latlon?format=json'
+								// + '&what=' + waypts[j] 
+								// + '&lat=' + N
+								// + '&lon=' + E
+								// + '&lat2=' + S
+								// + '&lon2=' + W
+								// + '&publisher=test';
 
 			request(get_request, function (error, response, body) {
 
@@ -45,6 +45,7 @@ exports.lookupStops = function(req, res, callback){
 
 				if (!error && response.statusCode == 200) {
 					console.log('PERCENT: ' + requests_progress_pct + '%');
+
 					var data = {
 						'body': body
 					};
@@ -62,6 +63,19 @@ exports.lookupStops = function(req, res, callback){
 		}
 	}
 };
+
+function buildGETRequest(boundaries, searchParams) {
+	var type = (searchParams.type) ? ('&type=' + searchParams.type) : ('');
+
+	return ('http://api.citygridmedia.com/content/places/v2/search/latlon?format=json'
+			+ '&what=' + searchParams.what 
+			// + type +
+			+ '&lat=' + boundaries.N
+			+ '&lon=' + boundaries.E
+			+ '&lat2=' + boundaries.S
+			+ '&lon2=' + boundaries.W
+			+ '&publisher=test');
+}
 
 function getUnixTimestamp() {
 	return ( new Date().getTime() );
