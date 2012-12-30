@@ -53,15 +53,18 @@ function processStops() {
   });
 }
 
-function calcRoute() {
-  var start = document.getElementById('start').value;
-  var end = document.getElementById('end').value;
-
-  // adds each list element as a stop
+function addListElementAsStop(waypts) {
   $('#sortable li').each(function(index) {
       var stopLoc = $(this).text();
       waypts.push(stopLoc);
   });
+}
+
+function calcRoute() {
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+
+  addListElementAsStop(waypts);
   
   // request to find google maps route, which will be boxed
   var request = {
@@ -73,29 +76,15 @@ function calcRoute() {
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       // variables used in searching stops along the way
-      var routeResponse = response;
-      var boxes = boxRoute(response);
+      var routeResponse = response,
+          boxes = boxRoute(response);
       var stops = jQuery.extend(true, [], waypts);
 
       var directions = [];
       for (var i = 0; i < boxes.length; i++) {
-        var boundaries = boxes[i];
         // Perform search over this bounds
-
-        // extract degree of each direction and push into directions array
-        // var N = boundaries.getNorthEast().lat().toString();
-        // var S = boundaries.getSouthWest().lat().toString();
-        // var E = boundaries.getNorthEast().lng().toString();
-        // var W = boundaries.getSouthWest().lng().toString();
-
-        // directions.push({
-        //   'N': boundaries.getNorthEast().lat().toString(),
-        //   'S': boundaries.getSouthWest().lat().toString(),
-        //   'E': boundaries.getNorthEast().lng().toString(),
-        //   'W': boundaries.getSouthWest().lng().toString()
-        // });
-
-        directions.push( getFourCornersAsObject(boundaries) );
+        var boundaries = boxes[i];
+        directions.push( getFourCornersAsArray(boundaries) );
       }
 
       var params = {
@@ -109,15 +98,15 @@ function calcRoute() {
       // convert boxes, stops, and route to JSON and insert back into form to submit
       var placesData = JSON.stringify(params);
       document.getElementById('params').value = placesData;
-      document.getElementById("route").submit();
+      document.getElementById('route').submit();
 
     } else {
-       // alert('Finding route: ' + status);
+       throw 'ERROR: google maps bad status while mapping final directions';
     }
   });        
 }
 
-function getFourCornersAsObject(boundaries) {
+function getFourCornersAsArray(boundaries) {
   var directions = {
     'N': boundaries.getNorthEast().lat().toString(),
     'S': boundaries.getSouthWest().lat().toString(),
