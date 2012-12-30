@@ -3,40 +3,32 @@
 var request = require('request');
 
 exports.lookupStops = function(req, res, callback){
-	// console.log("testing passing variables: " + req.body.params);
+	// extract stops and boxed lat long coords
 	var params = JSON.parse(req.body.params),
 		boxes = params.boxes,
 		waypts = params.waypts;
 
-	// console.log('boxes: ' + boxes.length + ' waypts: ' + waypts.length);
-	// var start_time = new Date().getTime();
-
+	// keep track of API call progress percentage
 	var request_counter = 0,
 		requests_progress_pct = 0,
 		total_requests = (boxes.length * waypts.length); 
 
 	// loop through all boxes along path
 	for(var i = 0; i < boxes.length; i++) {
-		// Perform search over this bounds
+		// Perform search over this boxed bounds
 		var boundaries = boxes[i];
 
-        // loop again and search for every waypoint
+        // loop through every waypoint
         for(var j = 0; j < waypts.length; j++) {
 
-        	var searchParams = {
+        	// parameters into the GET request
+        	var requestParams = {
         		'type': '',
         		'what': waypts[j]
         	};
 
         	// GET request to citygrid to look up places
-	        var get_request = buildGETRequest(boundaries, searchParams);
-	       //  var get_request = 'http://api.citygridmedia.com/content/places/v2/search/latlon?format=json'
-								// + '&what=' + waypts[j] 
-								// + '&lat=' + N
-								// + '&lon=' + E
-								// + '&lat2=' + S
-								// + '&lon2=' + W
-								// + '&publisher=test';
+	        var get_request = buildGETRequest(boundaries, requestParams);
 
 			request(get_request, function (error, response, body) {
 
@@ -50,9 +42,6 @@ exports.lookupStops = function(req, res, callback){
 						'body': body
 					};
 					callback(data, request_counter, total_requests, params);
-
-					// var end_time = getUnixTimestamp();
-					// var time = end_time - start_time;
 				}
 
 				// @todo: need to check data integrity, especially if errorcode
@@ -64,12 +53,17 @@ exports.lookupStops = function(req, res, callback){
 	}
 };
 
-function buildGETRequest(boundaries, searchParams) {
-	var type = (searchParams.type) ? ('&type=' + searchParams.type) : ('');
+function returnEmptyStringIfFalsy(str) {
+	return (str) ? (str) : ('');
+}
+
+function buildGETRequest(boundaries, requestParams) {
+	var what = returnEmptyStringIfFalsy(requestParams.what),
+		type = returnEmptyStringIfFalsy(requestParams.type);
 
 	return ('http://api.citygridmedia.com/content/places/v2/search/latlon?format=json'
-			+ '&what=' + searchParams.what 
-			// + type +
+			+ '&what=' + what
+			+ '&type=' + type
 			+ '&lat=' + boundaries.N
 			+ '&lon=' + boundaries.E
 			+ '&lat2=' + boundaries.S

@@ -83,17 +83,19 @@ function calcRoute() {
         // Perform search over this bounds
 
         // extract degree of each direction and push into directions array
-        var N = boundaries.getNorthEast().lat().toString();
-        var S = boundaries.getSouthWest().lat().toString();
-        var E = boundaries.getNorthEast().lng().toString();
-        var W = boundaries.getSouthWest().lng().toString();
+        // var N = boundaries.getNorthEast().lat().toString();
+        // var S = boundaries.getSouthWest().lat().toString();
+        // var E = boundaries.getNorthEast().lng().toString();
+        // var W = boundaries.getSouthWest().lng().toString();
 
-        directions.push({
-          'N': N,
-          'S': S,
-          'E': E,
-          'W': W
-        });
+        // directions.push({
+        //   'N': boundaries.getNorthEast().lat().toString(),
+        //   'S': boundaries.getSouthWest().lat().toString(),
+        //   'E': boundaries.getNorthEast().lng().toString(),
+        //   'W': boundaries.getSouthWest().lng().toString()
+        // });
+
+        directions.push( getFourCornersAsObject(boundaries) );
       }
 
       var params = {
@@ -113,6 +115,17 @@ function calcRoute() {
        // alert('Finding route: ' + status);
     }
   });        
+}
+
+function getFourCornersAsObject(boundaries) {
+  var directions = {
+    'N': boundaries.getNorthEast().lat().toString(),
+    'S': boundaries.getSouthWest().lat().toString(),
+    'E': boundaries.getNorthEast().lng().toString(),
+    'W': boundaries.getSouthWest().lng().toString()
+  };
+
+  return directions;
 }
 
 // takes a response (route) from google and creates rectangular boxes along the path
