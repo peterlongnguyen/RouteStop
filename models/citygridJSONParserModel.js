@@ -4,6 +4,7 @@
  * takes in citygrid api
  */
 exports.parseJSON = function(data, limits, progress, callback) {
+	// get JSON response object from citygrid API
 	var obj = getParsedJSON(data.body),
 		results = obj.results;
 
@@ -27,11 +28,11 @@ exports.parseJSON = function(data, limits, progress, callback) {
 		var total_hits = results.total_hits,
 			loc = results.locations[0];
 
-		// extract search key from URI
 		var key = extractSearchKeyFromURI(results.uri);
 
+		// checks if there are any results for that waypoint in that box boundary
 		if(loc) {
-			var address = loc.address,
+			var address = loc.address;
 
 			location = {
 				'status': 'OK',
@@ -61,6 +62,7 @@ function extractFullAddress(location) {
 }
 
 function extractSearchKeyFromURI(uri) {
+	// +6 to start at the end of the string '&what='
 	return ( uri.substring(uri.lastIndexOf('&what=')+6, uri.indexOf('&histograms')) );	
 }
 
@@ -89,13 +91,13 @@ function traverseFromCenter(arr) {
 		if(index_right < arr.length-1) {
 			index_right++;
 			objRight = arr[index_right]; 
-			// should this json object on the spot here
+			// should parse json object on the spot 
 		}			
 
 		if(index_left > 0) {
 			index_left--;
 			objLeft = arr[index_left];
-			// should this json object on the spot here
+			// should parse json object on the spot
 		}
 
 		console.log(objRight + " " + objLeft + " " + objCenter);

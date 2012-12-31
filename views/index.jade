@@ -17,10 +17,10 @@ block append content
 			input(type='text', name='place', id='place', value='in-n-out burger')
 			input(type='hidden', name='params', id='params')
 			input(type='button', onclick='pushWaypoint()', value='Add Stop', data-inline='true')
-
+			|<ul id="sortable" >
+			|</ul>
 		input(type='button', onclick='calcRoute()', name='submit', value='Submit', data-inline='true').submit-button
 
 	div#directions_panel
 
-	|<ul id="sortable" >
-	|</ul>	
+	

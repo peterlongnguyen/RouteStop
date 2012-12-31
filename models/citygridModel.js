@@ -41,12 +41,11 @@ exports.lookupStops = function(req, res, callback){
 					var data = {
 						'body': body
 					};
-					callback(data, request_counter, total_requests, params);
-				}
 
-				// @todo: need to check data integrity, especially if errorcode
-				if(request_counter == (total_requests)) {
-					console.log("end of file!");
+					callback(data, request_counter, total_requests, params);
+				
+				} else {
+					throw 'ERROR: error response from citygrid API';
 				}
 			})
 		}
@@ -54,7 +53,7 @@ exports.lookupStops = function(req, res, callback){
 };
 
 function returnEmptyStringIfFalsy(str) {
-	return (str) ? (str) : ('');
+	return ( (str) ? (str) : ('') );
 }
 
 function buildGETRequest(boundaries, requestParams) {

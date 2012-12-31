@@ -45,14 +45,7 @@ function setElement(id, newValue) {
   document.getElementById(id).value = newValue;
 }
 
-// converts stops list into input list to POST to controller
-function processStops() {
-  $('#sortable li').each(function(index) {
-      var stopLoc = $(this).text();
-      $('#sortable').append('<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' + stop +'</li>');
-  });
-}
-
+// adds list objects to waypoints array for future use as waypoints in google maps API
 function addListElementAsStop(waypts) {
   $('#sortable li').each(function(index) {
       var stopLoc = $(this).text();
