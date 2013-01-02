@@ -35,14 +35,16 @@ exports.lookupStops = function(req, res, callback){
 				request_counter++;
 				requests_progress_pct = getPercent(request_counter, total_requests);
 
+				// request response
 				if (!error && response.statusCode == 200) {
 					console.log('PERCENT: ' + requests_progress_pct + '%');
 
-					var data = {
-						'body': body
+					var requestResponse = {
+						'JSONdata': body
 					};
 
-					callback(data, request_counter, total_requests, params);
+					// callback to reply to citygridController
+					callback(requestResponse, request_counter, total_requests, params);
 				
 				} else {
 					throw 'ERROR: error response from citygrid API';

@@ -3,10 +3,10 @@
 /* @response: JSON response from citygrid places API
  * takes in citygrid api
  */
-exports.parseJSON = function(data, limits, progress, callback) {
+exports.parseJSON = function(requestResponse, limits, progress, callback) {
 	// get JSON response object from citygrid API
-	var obj = getParsedJSON(data.body),
-		results = obj.results;
+	var parsedJSON = getParsedJSON(requestResponse.JSONdata),
+		results = parsedJSON.results;
 
 	var location = {
 		'status': 'EMPTY',
@@ -24,11 +24,10 @@ exports.parseJSON = function(data, limits, progress, callback) {
 	if(results.total_hits == 0) { // || getDistance() > limits.max_distance) {
 		return location; 
 	} else {
-		location.status = 'OK';
 		var total_hits = results.total_hits,
 			loc = results.locations[0];
 
-		var key = extractSearchKeyFromURI(results.uri);
+		var key = getSearchKeyFromURI(results.uri);
 
 		// checks if there are any results for that waypoint in that box boundary
 		if(loc) {
@@ -45,7 +44,7 @@ exports.parseJSON = function(data, limits, progress, callback) {
 				'lat': loc.latitude,
 				'lng': loc.longitude
 			};
-			location.full_address = extractFullAddress(location);
+			location.full_address = getFullAddress(location);
 
 			callback(true, location, progress);
 		}	
@@ -57,11 +56,23 @@ function getParsedJSON(json) {
 	return ( JSON && JSON.parse(json) || $.parseJSON(json) );
 }
 
-function extractFullAddress(location) {
+function getAddressArray(address) {
+	var addr = {
+		'street': address.street,
+		'city': address.city,
+		'state': address.state,
+		'full_address': '',
+	}
+	location.full_address = getFullAddress(location);
+
+	return addr;
+}
+
+function getFullAddress(location) {
 	return ( location.street + ',' + location.city + ',' + location.state );
 }
 
-function extractSearchKeyFromURI(uri) {
+function getSearchKeyFromURI(uri) {
 	// +6 to start at the end of the string '&what='
 	return ( uri.substring(uri.lastIndexOf('&what=')+6, uri.indexOf('&histograms')) );	
 }

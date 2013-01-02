@@ -18,7 +18,7 @@ var limits = {
 var stopsWaypointFormat = [],
 	stops = [];
 // callback used whenever a result is returned from a single API get request
-function printData(data, request_counter, total_requests, parameters) {
+function printData(requestResponse, request_counter, total_requests, parameters) {
 	params = parameters;
 
 	var progress =  {
@@ -26,8 +26,8 @@ function printData(data, request_counter, total_requests, parameters) {
 		'total_requests': total_requests
 	};
 	
-	// data = json response, limit = criteria for qualifying json response, progress = % of requests done
-	passToParser(data, limits, progress, callback);
+	// limit = criteria for qualifying json response, progress = % of requests done
+	passToParser(requestResponse, limits, progress, callback);
 }
 
 // pushes address into waypoint object array
@@ -42,8 +42,8 @@ function pushStopsIntoWaypoints(stopsArray) {
 }
 
 // after receives that single API result, sends to parser
-function passToParser(data, limits, progress, callback) {
-	citygridParser.parseJSON(data, limits, progress, callback);
+function passToParser(requestResponse, limits, progress, callback) {
+	citygridParser.parseJSON(requestResponse, limits, progress, callback);
 }
 
 // parser's callback
@@ -62,7 +62,13 @@ function renderDirections() {
 	response.render('map', { title: 'RouteStop', start: params.start, end: params.end, stops: JSON.stringify(stopsWaypointFormat) });
 }
 
-// makes sure only one of each stop type is stored
+function printDict(dict) {
+	for (var key in dict) {
+		console.log('stopsFormattedArray: ' + key + ' / ' + dict[key]);
+	}
+}
+
+// makes sure only one of each stop type is stored in stops array
 function addToStopsDict(location) {
 	if(!(location.key in stops)) {
 		stops[location.key] = location.full_address;
