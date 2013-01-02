@@ -33,18 +33,27 @@ exports.parseJSON = function(requestResponse, limits, progress, callback) {
 		if(loc) {
 			var address = loc.address;
 
+			// location = {
+			// 	'status': 'OK',
+			// 	'key': key,
+			// 	'id': loc.id,
+			// 	'street': address.street,
+			// 	'city': address.city,
+			// 	'state': address.state,
+			// 	'full_address': '',
+			// 	'lat': loc.latitude,
+			// 	'lng': loc.longitude
+			// };
+			// location.full_address = getFullAddress(location);
+
 			location = {
 				'status': 'OK',
 				'key': key,
 				'id': loc.id,
-				'street': address.street,
-				'city': address.city,
-				'state': address.state,
-				'full_address': '',
+				'address': getAddressArray(address),
 				'lat': loc.latitude,
 				'lng': loc.longitude
 			};
-			location.full_address = getFullAddress(location);
 
 			callback(true, location, progress);
 		}	
@@ -61,15 +70,14 @@ function getAddressArray(address) {
 		'street': address.street,
 		'city': address.city,
 		'state': address.state,
-		'full_address': '',
+		'full_address': getFullAddress(addr),
 	}
-	location.full_address = getFullAddress(location);
-
+	
 	return addr;
 }
 
-function getFullAddress(location) {
-	return ( location.street + ',' + location.city + ',' + location.state );
+function getFullAddress(address) {
+	return ( address.street + ',' + address.city + ',' + address.state );
 }
 
 function getSearchKeyFromURI(uri) {
