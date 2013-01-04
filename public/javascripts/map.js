@@ -9,6 +9,18 @@ var map;
 
 // initializes google maps with LA as the default center
 function initialize() {
+
+  // var layer = "toner";
+  // map = new google.maps.Map(document.getElementById("element_id"), {
+  //     center: new google.maps.LatLng(37.7, -122.4),
+  //     zoom: 12,
+  //     mapTypeId: layer,
+  //     mapTypeControlOptions: {
+  //         mapTypeIds: [layer]
+  //     }
+  // });
+  // map.mapTypes.set(document.getElementById('map_canvas'), layer, new google.maps.StamenMapType(layer));
+
   var losangeles = new google.maps.LatLng(34.0522, -118.2428);
   var mapOptions = {
     zoom: 6,
@@ -19,6 +31,8 @@ function initialize() {
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions_panel'));
 }
+
+
 
 /* A hack used to pass the waypoint locations: the object was being split
  * into an array of characters when express passed it to jade, so this 

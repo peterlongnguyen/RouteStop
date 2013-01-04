@@ -43,8 +43,12 @@ exports.lookupStops = function(req, res, callback){
 						'JSONdata': body
 					};
 
+					var progressCounters =  {
+						'request_counter': request_counter,
+						'total_requests': total_requests
+					};
 					// callback to reply to citygridController
-					callback(requestResponse, request_counter, total_requests, params);
+					callback(requestResponse, progressCounters , params);
 				
 				} else {
 					throw 'ERROR: error response from citygrid API';

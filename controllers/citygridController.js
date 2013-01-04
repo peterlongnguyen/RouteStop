@@ -9,25 +9,27 @@ exports.GETStopsFromCityGrid = function(req, res) {
 	citygridAPI.lookupStops(req, res, printData);	
 };
 
-// limits/requirements to qualify results, for future use
-var limits = {
-	'max_distance': 5,
-	'total_hits': 0,
-};
 // stopLoc is the formatted, google maps-ready data structure
 var stopsWaypointFormat = [],
 	stops = [];
 // callback used whenever a result is returned from a single API get request
-function printData(requestResponse, request_counter, total_requests, parameters) {
+function printData(requestResponse, progressCounters, parameters) {
 	params = parameters;
-
-	var progress =  {
-		'request_counter': request_counter,
-		'total_requests': total_requests
-	};
 	
 	// limit = criteria for qualifying json response, progress = % of requests done
-	passToParser(requestResponse, limits, progress, callback);
+	passToParser(requestResponse, getLimits(), progressCounters, callback);
+}
+
+function setLimits() {}
+
+function getLimits() {
+	// limits/requirements to qualify results, for future use
+	var limits = {
+		'max_distance': 5,
+		'total_hits': 0,
+	};
+
+	return limits;
 }
 
 // pushes address into waypoint object array
@@ -47,10 +49,13 @@ function passToParser(requestResponse, limits, progress, callback) {
 }
 
 // parser's callback
-function callback(isValid, parsedlocation, progress) {
-	// right now isValid just means that results' data exists, will update in future to include limits/requirements
-	if(isValid) {
+function callback(parsedlocation, progress) {
+	// right now responseStatus just means that results' data exists, will update in future to include limits/requirements
+	responseStatus = parsedlocation.status;
+	if(responseStatus == 'OK') {
 		addToStopsDict(parsedlocation);
+	} else if(responseStatus == 'EMPTY') {
+		// do nothing yet
 	}
 	if((progress.request_counter*100)/(progress.total_requests) == 100) {
 		renderDirections();
@@ -71,7 +76,7 @@ function printDict(dict) {
 // makes sure only one of each stop type is stored in stops array
 function addToStopsDict(location) {
 	if(!(location.key in stops)) {
-		stops[location.key] = location.full_address;
+		stops[location.key] = location.address.full_address;
 	}
 }
 

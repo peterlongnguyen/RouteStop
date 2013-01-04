@@ -6,46 +6,16 @@
 exports.parseJSON = function(requestResponse, limits, progress, callback) {
 	// get JSON response object from citygrid API
 	var parsedJSON = getParsedJSON(requestResponse.JSONdata),
-		results = parsedJSON.results;
+		results = parsedJSON.results,
+		total_hits = results.total_hits;
 
-	var location = {
-		'status': 'EMPTY',
-		'key': '',
-		'id': '',
-		'street': '',
-		'city': '',
-		'state': '',
-		'full_address' : '',
-		'lat': '',
-		'lng': ''
-	 };
-
-	// right now only checks if results data exists, in future will apply other limits
-	if(results.total_hits == 0) { // || getDistance() > limits.max_distance) {
-		return location; 
-	} else {
-		var total_hits = results.total_hits,
-			loc = results.locations[0];
-
-		var key = getSearchKeyFromURI(results.uri);
+	if(total_hits) {
+		var loc = getLocations(results);
 
 		// checks if there are any results for that waypoint in that box boundary
 		if(loc) {
-			var address = loc.address;
-
-			// location = {
-			// 	'status': 'OK',
-			// 	'key': key,
-			// 	'id': loc.id,
-			// 	'street': address.street,
-			// 	'city': address.city,
-			// 	'state': address.state,
-			// 	'full_address': '',
-			// 	'lat': loc.latitude,
-			// 	'lng': loc.longitude
-			// };
-			// location.full_address = getFullAddress(location);
-
+			var address = loc.address,
+				key = getSearchKeyFromURI(results.uri);
 			location = {
 				'status': 'OK',
 				'key': key,
@@ -54,11 +24,18 @@ exports.parseJSON = function(requestResponse, limits, progress, callback) {
 				'lat': loc.latitude,
 				'lng': loc.longitude
 			};
-
-			callback(true, location, progress);
-		}	
+		}	 
+	} else {
+		var location = {
+			'status': 'EMPTY',
+		};
 	}
-	callback(false, location, progress);
+	callback(location, progress);
+}
+
+// currently only retrieves first location
+function getLocations(results) {
+	return results.locations[0];
 }
 
 function getParsedJSON(json) {
@@ -70,9 +47,9 @@ function getAddressArray(address) {
 		'street': address.street,
 		'city': address.city,
 		'state': address.state,
-		'full_address': getFullAddress(addr),
+		'full_address': getFullAddress(address),
 	}
-	
+
 	return addr;
 }
 
@@ -84,6 +61,11 @@ function getSearchKeyFromURI(uri) {
 	// +6 to start at the end of the string '&what='
 	return ( uri.substring(uri.lastIndexOf('&what=')+6, uri.indexOf('&histograms')) );	
 }
+
+// function getOriginLatLngFromURI(uri) {
+// 	var lat = uri.substring(uri.lastIndexOf('&what=')+6, uri.indexOf('&histograms'))
+// 	return 
+// }
 
 /* calculate distance between two lat long coords, used to ensure place 
  * of interest is within bounds, as citygrid will sometimes include 
