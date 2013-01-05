@@ -9,15 +9,12 @@ body {
 
 @media (max-width: 700px) {
   body {
-  	border-style: none;
-    background: black;
+    background: blue;
     margin: 15px;
     padding: 10px;
     width: 100%;
   }
 }
-
-
 
 #main_menu { 
 	
