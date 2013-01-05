@@ -8,7 +8,7 @@ body {
 }
 
 @media (max-width: 700px) {
-  #main_menu {
+  body {
   	border-style: none;
     background: black;
     margin: 15px;
