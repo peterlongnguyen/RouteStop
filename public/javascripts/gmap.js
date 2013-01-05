@@ -1,9 +1,4 @@
 
-$(function() {
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
-});
-
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
@@ -18,9 +13,19 @@ function reset() {
   clearWaypoints();
 }
 
+function enableSortable() {
+  $(function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+  });
+}
+
 // initializes google maps with LA as the default center
 function initialize() {
   reset();
+
+  enableSortable();
+
   directionsDisplay = new google.maps.DirectionsRenderer();
   var losangeles = new google.maps.LatLng(34.0522, -118.2428);
   var mapOptions = {

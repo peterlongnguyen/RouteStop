@@ -1,12 +1,11 @@
 body {
-	background-color: ;
 	float: left;
-	border-style: dotted;
-	margin: 15px;
-	padding: 10px;
+	border-style: solid;
+	margin: 0px;
+	padding: 0px;
 }
 
-/*@media (max-width: 700px) {
+/*@media handheld(max-width: 700px) {
   body {
     background: blue;
     margin: 15px;
@@ -15,8 +14,19 @@ body {
   }
 }*/
 
+#content_header {
+	background-color: #87CEFF;
+	color: white;
+	text-align: center;
+
+}
+
 #main_menu { 
-	
+
+}
+
+#route {
+	margin: 15px;
 }
 
 #map_canvas
@@ -26,6 +36,6 @@ body {
 	text-align: center
 
 #sortable { border-style: solid; float: right; list-style-type: none; margin: 0; padding: 0; width: 60%; }
-#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 13px; }
-#sortable li span { position: absolute; margin-left: -1.3em; }
+#sortable li { margin: 0 1px 1px 1px; padding: 0.2em; padding-left: 0.4em; font-size: 1.0em; height: 8px; }
+#sortable li span { position: absolute; margin-left: -0.5em; }
 
