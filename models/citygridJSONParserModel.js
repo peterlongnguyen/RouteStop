@@ -7,7 +7,8 @@ exports.parseJSON = function(requestResponse, limits, progress, callback) {
 	// get JSON response object from citygrid API
 	var parsedJSON = getParsedJSON(requestResponse.JSONdata),
 		results = parsedJSON.results,
-		total_hits = results.total_hits;
+		total_hits = results.total_hits,
+		location;
 
 	if(total_hits) {
 		var loc = getLocations(results);
@@ -16,17 +17,19 @@ exports.parseJSON = function(requestResponse, limits, progress, callback) {
 		if(loc) {
 			var address = loc.address,
 				key = getSearchKeyFromURI(results.uri);
+			
 			location = {
 				'status': 'OK',
 				'key': key,
 				'id': loc.id,
+				'name': loc.name,
 				'address': getAddressArray(address),
 				'lat': loc.latitude,
 				'lng': loc.longitude
 			};
 		}	 
 	} else {
-		var location = {
+		location = {
 			'status': 'EMPTY',
 		};
 	}

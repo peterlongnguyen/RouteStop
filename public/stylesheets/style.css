@@ -1,12 +1,15 @@
-body
+body {
+	background-color: ;
+	float: left;
+	border-style: dotted;
+	margin: 15px;
+	padding: 10px;
+	width: 500px;
+}
 
-a
-
-#main_menu 
-	float: left
-	border-style: dotted
-	margin: 15px
-	padding: 10px
+#main_menu { 
+	
+}
 
 #map_canvas
 	float: left

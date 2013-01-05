@@ -9,25 +9,27 @@ var map;
 
 // initializes google maps with LA as the default center
 function initialize() {
+  var losangeles = new google.maps.LatLng(34.0522, -118.2428),
+      mapDiv = 'map_canvas';
 
-  // var layer = "toner";
-  // map = new google.maps.Map(document.getElementById("element_id"), {
-  //     center: new google.maps.LatLng(37.7, -122.4),
-  //     zoom: 12,
-  //     mapTypeId: layer,
-  //     mapTypeControlOptions: {
-  //         mapTypeIds: [layer]
-  //     }
-  // });
-  // map.mapTypes.set(document.getElementById('map_canvas'), layer, new google.maps.StamenMapType(layer));
+  var layer = 'watercolor';
+  map = new google.maps.Map(document.getElementById(mapDiv), {
+      center: losangeles,
+      zoom: 8,
+      mapTypeId: layer,
+      mapTypeControlOptions: {
+          mapTypeIds: [layer]
+      }
+  });
+  map.mapTypes.set(layer, new google.maps.StamenMapType(layer));
 
-  var losangeles = new google.maps.LatLng(34.0522, -118.2428);
-  var mapOptions = {
-    zoom: 6,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    center: losangeles
-  }
-  map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+  // var mapOptions = {
+  //   zoom: 6,
+  //   mapTypeId: google.maps.MapTypeId.ROADMAP,
+  //   center: losangeles
+  // }
+  // map = new google.maps.Map(document.getElementById(mapDiv), mapOptions);
+
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions_panel'));
 }
@@ -77,13 +79,16 @@ function calcRoute() {
       directionsDisplay.setDirections(response);
 
       var route = response.routes[0];
+      var waypoint_order = route.waypoint_order;
+      console.log('waypoint orders: ' + waypoint_order.length + ' ' + waypoint_order[0]);
       var summaryPanel = document.getElementById("directions_panel");
       summaryPanel.innerHTML = "";
       // For each route, display summary information.
       for (var i = 0; i < route.legs.length; i++) {
+        var waypt = ( waypoint_order[i] ) ? (waypoint_order[i] + ' ') : ('');
         var routeSegment = i+1;
         summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br />";
-        summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+        summaryPanel.innerHTML += route.legs[i].start_address + " to " + waypt;
         summaryPanel.innerHTML += route.legs[i].end_address + "<br />";
         summaryPanel.innerHTML += route.legs[i].distance.text + "<br /><br />";
       }

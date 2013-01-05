@@ -76,7 +76,7 @@ function printDict(dict) {
 // makes sure only one of each stop type is stored in stops array
 function addToStopsDict(location) {
 	if(!(location.key in stops)) {
-		stops[location.key] = location.address.full_address;
+		stops[location.key] = location.name + ' ' + location.address.full_address;
 	}
 }
 
