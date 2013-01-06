@@ -88,6 +88,7 @@ body {
 #sortable li span { position: absolute; margin-left: -0.5em; }
 
 /*** spinning ***/
+/* most of the spinning related code is from this site: http://quainttech.blogspot.com/2007/03/gray-out-page-with-pop-up.html */
 
 /* general styling */
 

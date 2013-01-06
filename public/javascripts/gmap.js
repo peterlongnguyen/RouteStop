@@ -22,7 +22,7 @@ function enableSortable() {
 
 // initializes google maps with LA as the default center
 function initialize() {
-  reset();
+  // reset();
 
   enableSortable();
 
@@ -103,6 +103,8 @@ function calcRoute() {
       var placesData = JSON.stringify(params);
       document.getElementById('params').value = placesData;
       document.getElementById('route').submit();
+
+      reset();
 
     } else {
        throw 'ERROR: google maps bad status while mapping final directions';
