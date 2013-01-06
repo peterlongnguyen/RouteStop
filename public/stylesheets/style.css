@@ -17,7 +17,7 @@ body {
 	padding-top: 0px;
 	margin-top: 10px;
 	padding-bottom: 0px;
-	background-color: #87CEFF;
+	background-color: #38B0DE;
 	color: white;
 	text-align: center;
 	border-radius:10px;
@@ -30,6 +30,23 @@ body {
 #subtitle {
 	font-family: futura;
 	font-size: 18px;
+}
+
+#button_addstop {
+	position: relative;
+	float: left;
+	width: 48%;
+}
+
+#button_submit {
+	position: relative;
+	float: right;
+	width: 48%;
+}
+
+#route_buttons {
+	position: relative;
+	top: 5px;
 }
 
 #route {
@@ -71,4 +88,176 @@ body {
 #sortable { border-style: none; float: left; list-style-type: decimal; margin: 0; padding: 0; width: 60%; }
 #sortable li { margin: 10px 1px 5px 20px; padding: 0.2em; padding-left: 0.4em; font-size: 1.0em; height: 8px; }
 #sortable li span { position: absolute; margin-left: -0.5em; }
+
+/*** spinning ***/
+
+/* general styling */
+  body {
+    width:450px;
+    margin:18px auto;
+  }
+
+/* position the bars and balls correctly (rotate them and translate them outward)*/
+.bar1 {
+  -moz-transform:rotate(0deg) translate(0, -40px);
+  -webkit-transform:rotate(0deg) translate(0, -40px);opacity:0.12;
+}
+.bar2 {
+  -moz-transform:rotate(45deg) translate(0, -40px);
+  -webkit-transform:rotate(45deg) translate(0, -40px);opacity:0.25;
+}
+.bar3 {
+  -moz-transform:rotate(90deg) translate(0, -40px);
+  -webkit-transform:rotate(90deg) translate(0, -40px);opacity:0.37;
+}
+.bar4 {
+  -moz-transform:rotate(135deg) translate(0, -40px);
+  -webkit-transform:rotate(135deg) translate(0, -40px);opacity:0.50;
+}
+.bar5 {
+  -moz-transform:rotate(180deg) translate(0, -40px);
+  -webkit-transform:rotate(180deg) translate(0, -40px);opacity:0.62;
+}
+.bar6 {
+  -moz-transform:rotate(225deg) translate(0, -40px);
+  -webkit-transform:rotate(225deg) translate(0, -40px);opacity:0.75;
+}
+.bar7 {
+  -moz-transform:rotate(270deg) translate(0, -40px);
+  -webkit-transform:rotate(270deg) translate(0, -40px);opacity:0.87;
+}
+.bar8 {
+  -moz-transform:rotate(315deg) translate(0, -40px);
+  -webkit-transform:rotate(315deg) translate(0, -40px);opacity:1;
+}
+
+#spinner {
+	position: fixed;
+	left: 50%;
+	margin-left: -100px;
+}
+
+/* set up the three bar spinners */
+#div1, #div2,#div3 {
+  position:relative;
+  width:100px;
+  height:100px;
+  margin:25px;
+  -moz-border-radius:100px;
+  float:left;
+  -moz-transform:scale(0.5);
+  -webkit-transform:scale(0.5);
+
+  /* not used right now: */
+  -webkit-animation-name: rotateThis;
+  -webkit-animation-duration:2s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:linear;
+}
+#div1 div,
+#div2 div,
+#div3 div {
+  width:10px;
+  height:30px;
+  background:#000;
+  position:absolute;
+  top:35px;
+  left:45px;
+}
+
+/* shadows for the first spinner */
+#div1 div {
+  -moz-box-shadow:black 0 0 4px;
+  -webkit-box-shadow:black 0 0 4px
+}
+  /* rounded outer corners for the second */
+#div2 div {
+  -moz-border-radius-topleft:10px;
+  -moz-border-radius-topright:10px;
+  -webkit-border-top-left-radius:10px;
+  -webkit-border-top-right-radius:10px;
+}
+
+/* full rounded corners and partially hidden for the third */
+#div3 div {
+  -moz-border-radius:20px;
+  -webkit-border-radius:20px;
+  border-radius:20px;
+}
+#div3 .bar1,
+#div3 .bar2,
+#div3 .bar3 {opacity:0;}
+
+
+/* set up the three ball spinners */
+#div4, #div5, #div6 {
+  position:relative;
+  width:100px;
+  height:100px;
+  margin:25px;
+  -moz-border-radius:100px;
+  -webkit-border-radius:100px;
+  float:left;
+  -moz-transform:scale(0.5);
+  -webkit-transform:scale(0.5);
+
+  -webkit-animation-name: rotateThis;
+  -webkit-animation-duration:2s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:linear;
+}
+#div4 div,
+#div5 div,
+#div6 div {
+  width:20px;
+  height:20px;
+  background:#000;
+  -moz-border-radius:40px;
+  -webkit-border-radius:40px;
+  position:absolute;
+  left:40px;
+  top:40px;
+}
+/* add a shadow to the first */
+#div4 div {
+  -moz-box-shadow:black 0 0 4px;
+  -webkit-box-shadow:black 0 0 4px;
+}
+
+/* increase the balls in size */
+#div5 .bar1 {
+  -moz-transform:rotate(0deg)   translate(0, -40px) scale(0.1);
+  -webkit-transform:rotate(0deg)   translate(0, -40px) scale(0.1);opacity:0.12;}
+#div5 .bar2 {
+  -moz-transform:rotate(45deg)  translate(0, -40px) scale(0.2);
+  -webkit-transform:rotate(45deg)  translate(0, -40px) scale(0.2);opacity:0.25;}
+#div5 .bar3 {
+  -moz-transform:rotate(90deg)  translate(0, -40px) scale(0.4);
+  -webkit-transform:rotate(90deg)  translate(0, -40px) scale(0.4);opacity:0.37;}
+#div5 .bar4 {
+  -moz-transform:rotate(135deg) translate(0, -40px) scale(0.6);
+  -webkit-transform:rotate(135deg) translate(0, -40px) scale(0.6);opacity:0.50;}
+#div5 .bar5 {
+  -moz-transform:rotate(180deg) translate(0, -40px) scale(0.8);
+  -webkit-transform:rotate(180deg) translate(0, -40px) scale(0.8);opacity:0.62;}
+#div5 .bar6 {
+  -moz-transform:rotate(225deg) translate(0, -40px) scale(1);
+  -webkit-transform:rotate(225deg) translate(0, -40px) scale(1);opacity:0.75;}
+#div5 .bar7 {
+  -moz-transform:rotate(270deg) translate(0, -40px) scale(1.2);
+  -webkit-transform:rotate(270deg) translate(0, -40px) scale(1.2);opacity:0.87;}
+#div5 .bar8 {
+  -moz-transform:rotate(315deg) translate(0, -40px) scale(1.4);
+  -webkit-transform:rotate(315deg) translate(0, -40px) scale(1.4);opacity:1;}
+
+/* hide the last halve */
+#div6 .bar1 ,
+#div6 .bar2,
+#div6 .bar3 {opacity:0;}
+
+/* uncomment this to use css animation in webkit browsers */
+/* @-webkit-keyframes rotateThis {
+  from {-webkit-transform:scale(0.5) rotate(0deg);}
+  to {-webkit-transform:scale(0.5) rotate(360deg);}
+} */
 

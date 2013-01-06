@@ -28,12 +28,28 @@ block append content
 					input(type='hidden', name='params', id='params')
 				div#route_buttons
 					span
-						input(type='button', class='btn', onclick='pushWaypoint()', value='Add Stop')
+						input(type='button', id='button_addstop', class='btn', onclick='pushWaypoint()', value='Add Stop')
 					span
-						input(type='button', class='btn btn-primary', onclick='calcRoute()', value='Submit')
+						input(type='button', id='button_submit', class='btn btn-primary', onclick='calcRoute()', value='Submit')
 			div
 				| <ul id="sortable">
 				| </ul>
+
+
+	script
+		
+
+	div#spinner
+		| <div id="div1">
+		|  <div class="bar1"></div>
+		|  <div class="bar2"></div>
+		|  <div class="bar3"></div>
+		|  <div class="bar4"></div>
+		|  <div class="bar5"></div>
+		|  <div class="bar6"></div>
+		|  <div class="bar7"></div>
+		|  <div class="bar8"></div>
+		| </div>
 
 	div#directions_panel
 
