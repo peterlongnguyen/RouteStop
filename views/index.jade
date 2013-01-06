@@ -5,16 +5,16 @@ block prepend head
 block append content
 	div#content_header
 		div#title
-			h1= title
+			p RouteStop
 		div#subtitle	
 			p Plan your roadtrip now!
 
 	div#outerbox
 		div#innerbox
 			form(method='post', action='citygrid', id='route', class='navbar-form pull-left')
-				div.form_label
+				span.form_label
 					label(for='start') Start:
-				div.form_input
+				span.form_input
 					input(type='text', name='start', id='start', value='san francisco')  
 				div.form_label     
 					label(for='end') End:

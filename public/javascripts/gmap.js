@@ -137,7 +137,7 @@ function clearWaypoints() {
   waypts.length = 0;
 }
 
-/***** loading rotation *****/
+/***** rotating spinner *****/
 
 function makeVisibleSpinner() {
   document.getElementById('div1').style.visibility = 'visible';

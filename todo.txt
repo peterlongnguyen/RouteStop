@@ -1,0 +1,11 @@
+todo:
+
+1. check for duplications (unique ID)
+2. check for distance (lat lng) using google distance matrix api 
+	https://developers.google.com/maps/documentation/distancematrix/
+3. get address, plug back into google maps
+4. add % progress using jquery spinner
+what to do if search comes up empty
+5. if fields left blank, automatically assume/detect location
+6. utility class
+
