@@ -12,23 +12,23 @@ function initialize() {
   var losangeles = new google.maps.LatLng(34.0522, -118.2428),
       mapDiv = 'map_canvas';
 
-  var layer = 'watercolor';
-  map = new google.maps.Map(document.getElementById(mapDiv), {
-      center: losangeles,
-      zoom: 8,
-      mapTypeId: layer,
-      mapTypeControlOptions: {
-          mapTypeIds: [layer]
-      }
-  });
-  map.mapTypes.set(layer, new google.maps.StamenMapType(layer));
+  // var layer = 'watercolor';
+  // map = new google.maps.Map(document.getElementById(mapDiv), {
+  //     center: losangeles,
+  //     zoom: 8,
+  //     mapTypeId: layer,
+  //     mapTypeControlOptions: {
+  //         mapTypeIds: [layer]
+  //     }
+  // });
+  // map.mapTypes.set(layer, new google.maps.StamenMapType(layer));
 
-  // var mapOptions = {
-  //   zoom: 6,
-  //   mapTypeId: google.maps.MapTypeId.ROADMAP,
-  //   center: losangeles
-  // }
-  // map = new google.maps.Map(document.getElementById(mapDiv), mapOptions);
+  var mapOptions = {
+    zoom: 6,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: losangeles
+  }
+  map = new google.maps.Map(document.getElementById(mapDiv), mapOptions);
 
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directions_panel'));
