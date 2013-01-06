@@ -19,9 +19,17 @@ body {
 	text-align: center;
 }
 
+#title {
+	font-family: harabara;
+}
+
+#subtitle {
+	font-family: futura;
+	font-size: 18px;
+}
+
 #route {
 	border-style: none;
-	
 }
 
 #innerbox {
@@ -44,6 +52,16 @@ body {
 
 #sortable {
 	
+}
+
+@font-face {
+	font-family: harabara;
+	src: url('fonts/harabara.ttf');
+}
+
+@font-face {
+	font-family: kimberley bl;
+	src: url('fonts/kimberley bl.ttf');
 }
 
 #sortable { border-style: none; float: left; list-style-type: decimal; margin: 0; padding: 0; width: 60%; }
