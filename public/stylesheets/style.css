@@ -1,3 +1,5 @@
+/* the color scheme and fonts were taken from mailchimp's mobile site */
+
 body {
 	margin: 0px;
   padding: 0px;
@@ -18,13 +20,31 @@ body {
 
 #content_header {
   height: 80px;
-	background-color: #F4C772;
+	/*background-color: #F4C772;*/
 	color: #477EA7;
 	text-align: center;
 	/*border-radius:10px;*/
   padding-top: 15px;
   margin-bottom: 15px;
 	width: 100%;
+
+  /* IE10 Consumer Preview */ 
+  background-image: -ms-linear-gradient(top, #FCD079 0%, #E4B75C 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-linear-gradient(top, #FCD079 0%, #E4B75C 100%);
+
+  /* Opera */ 
+  background-image: -o-linear-gradient(top, #FCD079 0%, #E4B75C 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FCD079), color-stop(1, #E4B75C));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-linear-gradient(top, #FCD079 0%, #E4B75C 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: linear-gradient(to bottom, #FCD079 0%, #E4B75C 100%);
 }
 
 #title {
