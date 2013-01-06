@@ -7,32 +7,34 @@ block append content
 		h1= title
 		p Plan your roadtrip now!
 
-	div#main_menu
-		form(method='post', action='citygrid', id='route', class='navbar-form pull-left')
+	div#outerbox
+		div#innerbox
+			form(method='post', action='citygrid', id='route', class='navbar-form pull-left')
+				div.form_label
+					label(for='start') Start:
+				div.form_input
+					input(type='text', name='start', id='start', value='san francisco')  
+				div.form_label     
+					label(for='end') End:
+				div.form_input
+					input(type='text', name='end', id='end', value='los angeles')
+				div.form_label
+					label(for='stop') Stop: 
+				div.form_input
+					input(type='text', name='place', id='place', value='in-n-out burger')
+				div.form_label
+					input(type='hidden', name='params', id='params')
+				div#route_buttons
+					span
+						input(type='button', class='btn', onclick='pushWaypoint()', value='Add Stop')
+					span
+						input(type='button', class='btn btn-primary', onclick='calcRoute()', value='Submit')
 			div
-				label(for='start') Start:
-			div
-				input(type='text', name='start', id='start', value='san francisco')  
-			div      
-				label(for='end') End:
-			div
-				input(type='text', name='end', id='end', value='los angeles')
-			div
-				label(for='stop') Stop: 
-			div
-				input(type='text', name='place', id='place', value='in-n-out burger')
-			div
-				input(type='hidden', name='params', id='params')
-			div
-				span
-					input(type='button', class='btn', onclick='pushWaypoint()', value='Add Stop')
-				span
-					input(type='button', class='btn btn-primary', onclick='calcRoute()', value='Submit')
-			|<ul id="sortable">
-			|</ul>
-
-			
+				| <ul id="sortable">
+				| </ul>
 
 	div#directions_panel
+
+
 
 	

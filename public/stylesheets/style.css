@@ -1,8 +1,7 @@
 body {
-	float: left;
-	border-style: solid;
 	margin: 0px;
-	padding: 0px;
+	top: 0px;
+	border-style: none;
 }
 
 /*@media handheld(max-width: 700px) {
@@ -18,24 +17,36 @@ body {
 	background-color: #87CEFF;
 	color: white;
 	text-align: center;
-
-}
-
-#main_menu { 
-
 }
 
 #route {
-	margin: 15px;
+	border-style: none;
+	
 }
 
-#map_canvas
-	float: left
+#innerbox {
+	 width: 100%;
+}
 
-#content_header
-	text-align: center
+#outerbox {
+  position: fixed;
+  left: 50%;
+  margin-left: -100px;
+}
 
-#sortable { border-style: solid; float: right; list-style-type: none; margin: 0; padding: 0; width: 60%; }
-#sortable li { margin: 0 1px 1px 1px; padding: 0.2em; padding-left: 0.4em; font-size: 1.0em; height: 8px; }
+.form_label {
+
+}
+
+.form_input {
+
+}
+
+#sortable {
+	
+}
+
+#sortable { border-style: none; float: left; list-style-type: decimal; margin: 0; padding: 0; width: 60%; }
+#sortable li { margin: 10px 1px 5px 20px; padding: 0.2em; padding-left: 0.4em; font-size: 1.0em; height: 8px; }
 #sortable li span { position: absolute; margin-left: -0.5em; }
 
