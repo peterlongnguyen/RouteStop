@@ -59,7 +59,12 @@ function addListElementAsStop(waypts) {
 }
 
 function calcRoute() {
+
+  grayout();
+  makeVisibleSpinner();
   window.setTimeout(rotate, 100);
+
+
   var start = document.getElementById('start').value;
   var end = document.getElementById('end').value;
 
@@ -132,28 +137,24 @@ function clearWaypoints() {
 
 /***** loading rotation *****/
 
+function makeVisibleSpinner() {
+  document.getElementById('div1').style.visibility = 'visible';
+}
+
 var count = 0;
 function rotate() {
-  var elem = document.getElementById('div1');
-  // var elem2 = document.getElementById('div2');
-  // var elem3 = document.getElementById('div3');
-  // var elem4 = document.getElementById('div4');
-  // var elem5 = document.getElementById('div5');
-  // var elem6 = document.getElementById('div6');
+  var elem = document.getElementById('spinner');
   elem.style.MozTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem2.style.MozTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem3.style.MozTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem4.style.MozTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem5.style.MozTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem6.style.MozTransform = 'scale(0.5) rotate('+count+'deg)';
   elem.style.WebkitTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem2.style.WebkitTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem3.style.WebkitTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem4.style.WebkitTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem5.style.WebkitTransform = 'scale(0.5) rotate('+count+'deg)';
-  // elem6.style.WebkitTransform = 'scale(0.5) rotate('+count+'deg)';
+
   if (count==360) { count = 0 }
   count+=45;
   window.setTimeout(rotate, 100);
+}
+
+/***** grayout *****/
+
+function grayout() {
+  document.getElementById('grayout').style.visibility = 'visible';
 }
 
