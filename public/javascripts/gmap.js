@@ -111,7 +111,7 @@ function getFourCornersAsArray(boundaries) {
     'E': boundaries.getNorthEast().lng().toString(),
     'W': boundaries.getSouthWest().lng().toString()
   };
-
+ 
   return directions;
 }
 
