@@ -17,7 +17,7 @@ body {
 }*/
 
 #content_header {
-  height: 70px;
+  height: 80px;
 	background-color: #F4C772;
 	color: #477EA7;
 	text-align: center;
@@ -29,7 +29,7 @@ body {
 
 #title {
 	font-family: wendy;
-  font-size: 40px;
+  font-size: 60px;
 }
 
 #subtitle {
@@ -64,7 +64,7 @@ body {
 
 #outerbox {
   position: fixed;
-  left: 45%;
+  left: 47.5%;
   margin-left: -100px;
 }
 
@@ -141,7 +141,7 @@ body {
 #spinner {
 	visibility: hidden;
 	position: fixed;
-	left: 52.5%;
+	left: 55.5%;
 	margin-left: -100px;
 	z-index: 1001;
 }
