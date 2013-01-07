@@ -22,7 +22,7 @@ function enableSortable() {
 
 // initializes google maps with LA as the default center
 function initialize() {
-  // reset();
+  reset();
 
   enableSortable();
 
@@ -37,8 +37,26 @@ function initialize() {
   directionsDisplay.setMap(map);
 }
 
+// if user has stop typed into stops input but has not pressed "add stop"
+function waypointWaitingInInput() {
+  var stop = document.getElementById('place').value;
+  if(stop) console.log('stop: ' + stop);
+  if(stop) return true;
+  return false;
+}
+
+function pushWaypointBackend(waypoint) {
+  waypts.push(waypoint);
+}
+
+// adds stop in input if user typed into stops but has not pressed "add stop"
+function pushWaypointInInput() {
+  var stop = document.getElementById('place').value;
+  if(waypointWaitingInInput()) pushWaypointBackend(stop);
+}
+
 // visually adds the waypoint to the list on the frontend, no backend happens
-function pushWaypoint() {
+function pushWaypointFrontend() {
   var stop = document.getElementById('place').value;
   $('#sortable').append('<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' + stop +'</li>');      
 
@@ -51,24 +69,34 @@ function setElement(id, newValue) {
 }
 
 // adds list objects to waypoints array for future use as waypoints in google maps API
-function addListElementAsStop(waypts) {
+function pushListElementAsStop(waypts) {
   $('#sortable li').each(function(index) {
       var stopLoc = $(this).text();
       waypts.push(stopLoc);
   });
 }
 
-function calcRoute() {
+function pushAllWaypointsIntoWaypoints() {
+  pushListElementAsStop(waypts);
+  pushWaypointInInput();
+}
 
+// graying out, disabling buttons, loading spinner, etc
+function transitionRender() {
+  disableButtons();
   grayout();
   makeVisibleSpinner();
-  window.setTimeout(rotate, 100);
+  rotate();
+}
 
+function calcRoute() {
+
+  transitionRender();
 
   var start = document.getElementById('start').value;
   var end = document.getElementById('end').value;
 
-  addListElementAsStop(waypts);
+  pushAllWaypointsIntoWaypoints();
   
   // request to find google maps route, which will be boxed
   var request = {
@@ -135,6 +163,18 @@ function boxRoute(response) {
 
 function clearWaypoints() {
   waypts.length = 0;
+}
+
+/***** disable buttons *****/
+
+function disableButtons() {
+  $('button_addstop').prop('disabled', true);
+  $('button_submit').prop('disabled', true);
+}
+
+function enableButtons() {
+  $('button_addstop').prop('disabled', false);
+  $('button_submit').prop('disabled', false);
 }
 
 /***** rotating spinner *****/

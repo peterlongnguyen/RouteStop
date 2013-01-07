@@ -331,9 +331,6 @@ body {
 }
 
 #map_canvas {
-  border-style: solid;
-  border-color: #5C3317;
-  border-width: 10px;
-  border-radius: 15px;
+  
 }
 
