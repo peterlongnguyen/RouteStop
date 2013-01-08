@@ -50,6 +50,7 @@ function getAddressArray(address) {
 		'street': address.street,
 		'city': address.city,
 		'state': address.state,
+		'postal_code': address.postal_code,
 		'full_address': getFullAddress(address),
 	}
 
@@ -57,7 +58,7 @@ function getAddressArray(address) {
 }
 
 function getFullAddress(address) {
-	return ( address.street + ',' + address.city + ',' + address.state );
+	return ( address.street + ', ' + address.city + ', ' + address.state + ', ' + address.postal_code + ', USA' );
 }
 
 function getSearchKeyFromURI(uri) {
