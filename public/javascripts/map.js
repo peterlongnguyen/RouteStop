@@ -1,7 +1,8 @@
 // data passed in from controller
 var start = 'start default', 
     end = 'end default',
-    waypts = new Array();
+    waypts = new Array(),
+    names = [];
 
 var directionsDisplay = new google.maps.DirectionsRenderer();
 var directionsService = new google.maps.DirectionsService();
@@ -47,6 +48,45 @@ function pushWaypoints() {
       json += waypts[i];
   }
   waypts = jQuery.parseJSON(json);
+  retrieveLocationName(waypts, names);
+  console.log('final loc: ' + waypts[0].location);
+}
+
+// extracts name from location, storing the key pair in associative array 'name'
+function retrieveLocationName(arr, nameArr) {
+  for (var i = 0; i < arr.length; i++) {
+    var address = arr[i].location;
+    var index = address.indexOf('*/');
+
+    if(index == -1) {
+      // if it's just a regular address, the address will be both key and value
+      nameArr[address] = address;
+    } else {
+      // remove the name portion from the address (e.g. remove 'In-n-out burger*/')
+      var name = address.substring(0, index);
+      address = address.substring(index+2);
+      nameArr[address] = name;
+      arr[i].location = address;
+    }
+  }
+}
+
+function returnEmptyStringIfFalsy(str) {
+  return ( (str) ? (str + ' ') : ('') );
+}
+
+/* tries to match up the address google uses (which is altered by google) to one stored in 
+ * the names array to figure out the name of the waypoint (e.g. restaurant name). 
+ * uses levenshtein formula, properly accredited in levenshtein.js 
+ */
+function getName(address) {
+  for(var key in names) {
+    // returns if the addresses have a 50% match
+    if( ( (1.0) * (levenshteinenator(address, key)/address.length) ) <= 0.5 ) {
+      return ( names[key] + ', ' );
+    }
+  }
+  return ('');
 }
 
 function hasWaypoints() {
@@ -80,7 +120,6 @@ function calcRoute() {
 
       var route = response.routes[0];
       var waypoint_order = route.waypoint_order;
-      console.log('waypoint orders: ' + waypoint_order.length + ' ' + waypoint_order[0]);
       var summaryPanel = document.getElementById("directions_panel");
       summaryPanel.innerHTML = "";
       // For each route, display summary information.
@@ -88,8 +127,8 @@ function calcRoute() {
         var waypt = ( waypoint_order[i] ) ? (waypoint_order[i] + ' ') : ('');
         var routeSegment = i+1;
         summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br />";
-        summaryPanel.innerHTML += route.legs[i].start_address + " to " + waypt;
-        summaryPanel.innerHTML += route.legs[i].end_address + "<br />";
+        summaryPanel.innerHTML += getName(route.legs[i].start_address) + route.legs[i].start_address + " to ";
+        summaryPanel.innerHTML += getName(route.legs[i].end_address) + route.legs[i].end_address + "<br />";
         summaryPanel.innerHTML += route.legs[i].distance.text + "<br /><br />";
       }
     }
