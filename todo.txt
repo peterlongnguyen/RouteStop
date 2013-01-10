@@ -9,3 +9,6 @@ what to do if search comes up empty
 5. if fields left blank, automatically assume/detect location
 6. utility class
 
+federal spending breakdown
+ruby on rails, d3, interactive, caching/storing data
+http://www.fedspending.org/apidoc.php

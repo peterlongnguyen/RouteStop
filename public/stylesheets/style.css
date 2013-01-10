@@ -1,5 +1,10 @@
 /* the color scheme and fonts were taken from mailchimp's mobile site */
 
+.icon-list {
+  height: 15px;
+  background:url('images2/list3.png');
+}
+
 body {
 	margin: 0px;
   padding: 0px;
