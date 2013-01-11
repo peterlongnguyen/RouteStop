@@ -7,7 +7,7 @@ block append content
 		div#title
 			p RouteStop
 		div#subtitle
-			| <br />	
+			br	
 			p Plan your roadtrip now!
 
 	div#outerbox
@@ -23,30 +23,16 @@ block append content
 					input(type='text', name='end', id='end', value='san francisco')
 				div.form_label
 					label(for='stop') Stop: 
-				//- div.form_input
-				//- 	input(type='text', name='place', id='place', value='in-n-out burger')
-				
-				
+							
 				div.form_input
 					div.input-prepend
 						span.add-on
-							i.icon-list
-						//- input(type='text', name='place', id='inputIcon', style='width:180px')
+							a#categories
+								i.icon-list
 						input(type='text', name='place', id='place', value='in-n-out burger', style='width:180px')
 
 				div.form_label
 					input(type='hidden', name='params', id='params')
-
-
-				//- | <div class="control-group">
-				//- |  <span id="form_label"><label class="control-label" for="inputIcon">Email address</label></span>
-				//- |  <div class="controls">
-				//- |    <div class="input-prepend">
-				//- |      <span class="add-on"><i class="icon-list"></i></span>
-				//- |      <span class="form_input"><input class="span2" id="inputIcon" type="text" style="width:100%"></span>
-				//- |    </div>
-				//- |  </div>
-				//- | </div>
 
 				div#route_buttons
 					span

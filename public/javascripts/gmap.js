@@ -200,3 +200,9 @@ function grayout() {
   document.getElementById('grayout').style.visibility = 'visible';
 }
 
+/***** categories button *****/
+
+$("#categories").click(function(event) {
+  console.log("Handler for .click() called.");
+  alert('hello world!');
+});

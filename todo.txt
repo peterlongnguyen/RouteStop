@@ -8,6 +8,7 @@ todo:
 what to do if search comes up empty
 5. if fields left blank, automatically assume/detect location
 6. utility class
+7. how to handle stopping at same-name place multiple times?
 
 federal spending breakdown
 ruby on rails, d3, interactive, caching/storing data

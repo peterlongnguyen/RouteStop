@@ -32,7 +32,7 @@ app.configure('development', function(){
 
 // routes
 app.post('/citygrid', function(req, res) {
-  citygridController.GETStopsFromCityGrid(req, res);
+  citygridController.filterStops(req, res);
 });
 app.get('/users', user.list);
 app.get('/', routes.index);

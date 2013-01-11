@@ -2,11 +2,15 @@
 
 var request = require('request');
 
-exports.lookupStops = function(req, res, callback){
+exports.lookupStops = function(wp, box, req, res, callback) {
 	// extract stops and boxed lat long coords
-	var params = JSON.parse(req.body.params),
-		boxes = params.boxes,
-		waypts = params.waypts;
+	// var params = JSON.parse(req.body.params),
+	// var params = req.body.params,
+		var params = 'something',
+		boxes = box,
+		waypts = wp;
+		// boxes = params.boxes,
+		// waypts = params.waypts;
 
 	// keep track of API call progress percentage
 	var request_counter = 0,
@@ -48,7 +52,7 @@ exports.lookupStops = function(req, res, callback){
 						'total_requests': total_requests
 					};
 					// callback to reply to citygridController
-					callback(requestResponse, progressCounters , params);
+					callback(requestResponse, progressCounters, params);
 				
 				} else {
 					throw 'ERROR: error response from citygrid API';
