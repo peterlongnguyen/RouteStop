@@ -10,12 +10,11 @@ var params = {
 var response, request, filteredAddressesReq;
 exports.filterStops = function(req, res) {
 	response = res;
-	// response = JSON.parse(res);
 	request = req;
+
 	var parsedReq = JSON.parse(request.body.params);
 	params.start = parsedReq.start;
 	params.end = parsedReq.end;
-	console.log('beginningpart: ' + parsedReq);
 
 	// remove validated addresses from waypoints list
 	filteredAddressesReq = parsedReq.waypts;
@@ -64,7 +63,7 @@ function GETStopsIfDoneFilteringAddresses() {
 
 		var waypointsParsed = JSON.parse(request.body.params).waypts,
 			boxesParsed = JSON.parse(request.body.params).boxes;
-		// parsedReq = JSON.stringify(parsedReq);
+
 		GETStopsFromCityGrid(waypointsParsed, boxesParsed, parsedReq, response);
 	}
 }
