@@ -18,6 +18,7 @@ exports.filterStops = function(req, res) {
 
 	// remove validated addresses from waypoints list
 	filteredAddressesReq = parsedReq.waypts;
+	console.log('untouched addresses: ' + filteredAddressesReq);
 	removeAddresses(filteredAddressesReq);
 }
 
@@ -27,9 +28,10 @@ function removeAddresses(filteredAddresses) {
 	// figure out the max number of waypoints so we know when to allow processing of non-addresses
 	waypointMax = filteredAddresses.length;
 
+	var filteredCopy = filteredAddressesReq;
 	// loop through waypoints to remove valid addresses from places API search, and bypass to google maps routing
 	for(i = 0; i < waypointMax; i++) {
-		validateAddress(filteredAddresses[i], finishedValidation);
+		validateAddress(filteredCopy[i], finishedValidation);
 	}
 }
 
@@ -41,10 +43,11 @@ function validateAddress(waypt, callback) {
 function finishedValidation(waypt, status) {
 	/* if callback is good (i.e. address is valid), remove from filteredAddresses and add to final waypints */
 	if(status == 'OK') {
-		filteredAddressesReq = removeAddressFromReq(waypt, filteredAddressesReq);
+		console.log('Waypt is an address: ' + waypt);
+		filteredAddressesReq = removeFromList(waypt, filteredAddressesReq);
 		pushSingleStopIntoWaypoints(waypt);
 	} else {
-		
+		// console.log('status is NOT ok for: ' + waypt);
 	}
 
 	incrementWaypointCounter();
@@ -61,29 +64,25 @@ function GETStopsIfDoneFilteringAddresses() {
 		var parsedReq = JSON.parse(request.body.params);
 		parsedReq.waypts = filteredAddressesReq;
 
-		var waypointsParsed = JSON.parse(request.body.params).waypts,
-			boxesParsed = JSON.parse(request.body.params).boxes;
+		var boxesParsed = JSON.parse(request.body.params).boxes;
 
-		GETStopsFromCityGrid(waypointsParsed, boxesParsed, parsedReq, response);
+		GETStopsFromCityGrid(filteredAddressesReq, boxesParsed, parsedReq, response);
 	}
 }
 
-function removeAddressFromReq(address, filteredAddresses) {
-	filteredAddresses = removeFromList(address, filteredAddresses);
-
-	return filteredAddresses;
-}
-
+// splice wasn't working correctly, so this actually returns a new array omitting the item
 function removeFromList(item, list) {
-	for(i = 0; i < list.length; i++) {
-		if(list[i] == item) {
-			list = list.splice(i, 1);
-			console.log('item removed: ' + item);
-			break;
+	var arr = [];
+	console.log('need to remove: ' + item);
+	var indexToRemove = -1;
+	for(var i = 0; i < list.length; i++) {
+		if(list[i] != item) {
+			arr.push(list[i]);
 		}
 	}
+	console.log('new list after removal: ' + arr);
 
-	return list;
+	return arr;
 }
 
 // invokes citygrid API model to send GET requests using the box boundaries and stop search terms.
@@ -137,7 +136,7 @@ function callback(parsedlocation, progress) {
 	responseStatus = parsedlocation.status;
 	if(responseStatus == 'OK') {
 		addToStopsDict(parsedlocation);
-	} else if(responseStatus == 'EMPTY') {
+	} else {
 		// do nothing yet
 	}
 	if((progress.request_counter*100)/(progress.total_requests) == 100) {
@@ -154,6 +153,9 @@ function passToParser(requestResponse, limits, progress, callback) {
 
 function renderDirections() {
 	pushStopsIntoWaypoints(stops);
+	console.log('stops array: ' + stops.toString());
+	console.log('filtered addresses array: ' + filteredAddressesReq);
+	// pushStopsIntoWaypoints(filteredAddressesReq);
 	response.render('map', { title: 'RouteStop', start: params.start, end: params.end, stops: JSON.stringify(stopsWaypointFormat) });
 }
 
@@ -170,6 +172,4 @@ function addToStopsDict(location) {
 		stops[location.key] = location.name + '*/' + location.address.full_address;
 	}
 }
-
-
 

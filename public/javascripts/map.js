@@ -82,7 +82,7 @@ function returnEmptyStringIfFalsy(str) {
 function getName(address) {
   for(var key in names) {
     // returns if the addresses have a 50% match
-    if( ( (1.0) * (levenshteinenator(address, key)/address.length) ) <= 0.5 && !isOnlyAnAdress(key) ) {
+    if( ( (1.0) * (levenshteinenator(address, key)/address.length) ) <= 0.5 && !isOnlyAnAdress(key, names[key]) ) {
       return ( '<b>' + names[key] + '</b>, ' );
     }
   }
@@ -90,8 +90,8 @@ function getName(address) {
 }
 
 // names of destinations are separated from addresses by */ pattern, whereas pure addresses have no name
-function isOnlyAnAdress(waypt) {
-  return waypt.indexOf('*/') == -1;
+function isOnlyAnAdress(key, value) {
+  return ( key == value );
 }
 
 function hasWaypoints() {
