@@ -4,13 +4,9 @@ var request = require('request');
 
 exports.lookupStops = function(wp, box, req, res, callback) {
 	// extract stops and boxed lat long coords
-	// var params = JSON.parse(req.body.params),
-	// var params = req.body.params,
-		var params = 'something',
-		boxes = box,
-		waypts = wp;
-		// boxes = params.boxes,
-		// waypts = params.waypts;
+		var params = 'empty param',
+			boxes = box,
+			waypts = wp;
 
 	// keep track of API call progress percentage
 	var request_counter = 0,

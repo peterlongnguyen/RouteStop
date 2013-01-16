@@ -7,8 +7,26 @@ var params = {
 	'end': ''
 };
 
-var response, request, filteredAddressesReq;
+// need to reset because variables are persistent
+function resetVariables() {
+	response = null;
+	request = null;
+	filteredAddressesReq = null;
+	params = {
+		'start': '',
+		'end': ''
+	};
+	waypointCounter = 0;
+	waypointMax = null;
+	stopsWaypointFormat.length = 0;
+	stops.length = 0;
+}
+
+var response = null, 
+	request = null, 
+	filteredAddressesReq = null;
 exports.filterStops = function(req, res) {
+	resetVariables();
 	response = res;
 	request = req;
 
@@ -24,7 +42,6 @@ exports.filterStops = function(req, res) {
 
 var waypointCounter = 0, waypointMax;
 function removeAddresses(filteredAddresses) {
-
 	// figure out the max number of waypoints so we know when to allow processing of non-addresses
 	waypointMax = filteredAddresses.length;
 
@@ -61,6 +78,7 @@ function incrementWaypointCounter() {
 // once validation finishes, begins looking up stops
 function GETStopsIfDoneFilteringAddresses() {
 	if(waypointCounter == waypointMax) {
+		console.log('done!');
 		var parsedReq = JSON.parse(request.body.params);
 		parsedReq.waypts = filteredAddressesReq;
 

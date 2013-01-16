@@ -49,7 +49,6 @@ function pushWaypoints() {
   }
   waypts = jQuery.parseJSON(json);
   retrieveLocationName(waypts, names);
-  console.log('final loc: ' + waypts[0].location);
 }
 
 // extracts name from location, storing the key pair in associative array 'name'
@@ -82,7 +81,7 @@ function returnEmptyStringIfFalsy(str) {
 function getName(address) {
   for(var key in names) {
     // returns if the addresses have a 50% match
-    if( ( (1.0) * (levenshteinenator(address, key)/address.length) ) <= 0.5 && !isOnlyAnAdress(key, names[key]) ) {
+    if( ( (1.0) * (levenshteinenator(address.toLowerCase(), key.toLowerCase())/address.length) ) <= 0.5 && !isOnlyAnAdress(key, names[key]) ) {
       return ( '<b>' + names[key] + '</b>, ' );
     }
   }

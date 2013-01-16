@@ -2,8 +2,9 @@ var request = require('request');
 
 exports.geocode = function(waypt, callback) {
 	var get_request = GETgeocodingURI(waypt);
-
+	console.log('geocode: ' + waypt);
 	request(get_request, function (error, response, body) {
+		console.log(' callbacking: ' + waypt);
 		if (!error && response.statusCode == 200) {
 			callback( waypt, isOk_DSTKwrapper(waypt, body) );
 		} else {
@@ -22,6 +23,7 @@ function GETgeocodingURI(address) {
 
 // JSON.parse wasn't properly converting to javascript, so have to parse it as string, searching for 'null' value
 function isOk_DSTKwrapper(waypoint, stringResponse) {
+	console.log('is ok dstk wrapper : ' + waypoint);
 	var nullValue = ( '"' + waypoint + '": null' );
 	if(stringResponse.indexOf(nullValue) == -1) {
 		return 'OK';

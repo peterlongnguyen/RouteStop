@@ -130,7 +130,10 @@ function calcRoute() {
       // convert boxes, stops, and route to JSON and insert back into form to submit
       var placesData = JSON.stringify(params);
       document.getElementById('params').value = placesData;
-      document.getElementById('route').submit();
+      console.log('reaches here: ' + params.waypts);
+      // document.getElementById('route').submit();
+      submitForm();
+      console.log('reaches here: ' + params.waypts);
 
       reset();
 
@@ -138,6 +141,11 @@ function calcRoute() {
        throw 'ERROR: google maps bad status while mapping final directions';
     }
   });        
+}
+
+function submitForm() {
+  document.getElementById('route').submit();
+  document.getElementById('route').reset();
 }
 
 function getFourCornersAsArray(boundaries) {
