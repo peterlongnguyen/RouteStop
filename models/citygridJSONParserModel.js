@@ -83,28 +83,3 @@ function getDistance(lat1, lon1, lat2, lon2) {
             Math.cos(lat1)*Math.cos(lat2) *
             Math.cos(lon2-lon1)) * R);
 }
-
-// start from center and work outwards, will use in future to space out stops
-function traverseFromCenter(arr) {
-	var center = Math.floor(arr.length/2) - 1;
-	var index_right = center, index_left = center;
-	var objLeft, objRight, objCenter;
-	for(i = 0; i < arr.length/2; i++) {
-
-		objCenter = arr[center];
-
-		if(index_right < arr.length-1) {
-			index_right++;
-			objRight = arr[index_right]; 
-			// should parse json object on the spot 
-		}			
-
-		if(index_left > 0) {
-			index_left--;
-			objLeft = arr[index_left];
-			// should parse json object on the spot
-		}
-
-		console.log(objRight + " " + objLeft + " " + objCenter);
-	}
-}

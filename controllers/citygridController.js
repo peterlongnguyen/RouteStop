@@ -18,8 +18,8 @@ function resetVariables() {
 	};
 	waypointCounter = 0;
 	waypointMax = null;
-	stopsWaypointFormat.length = 0;
-	stops.length = 0;
+	stopsWaypointFormat = [];
+	stops = [];
 }
 
 var response = null, 
@@ -36,7 +36,6 @@ exports.filterStops = function(req, res) {
 
 	// remove validated addresses from waypoints list
 	filteredAddressesReq = parsedReq.waypts;
-	console.log('untouched addresses: ' + filteredAddressesReq);
 	removeAddresses(filteredAddressesReq);
 }
 
@@ -168,10 +167,9 @@ function passToParser(requestResponse, limits, progress, callback) {
 	citygridParser.parseJSON(requestResponse, limits, progress, callback);
 }
 
-
 function renderDirections() {
+	console.log('stopsWaypointFormat: ' + stopsWaypointFormat.length);
 	pushStopsIntoWaypoints(stops);
-	console.log('stops array: ' + stops.toString());
 	console.log('filtered addresses array: ' + filteredAddressesReq);
 	// pushStopsIntoWaypoints(filteredAddressesReq);
 	response.render('map', { title: 'RouteStop', start: params.start, end: params.end, stops: JSON.stringify(stopsWaypointFormat) });
