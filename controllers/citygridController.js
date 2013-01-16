@@ -167,7 +167,7 @@ function passToParser(requestResponse, limits, progress, callback) {
 	citygridParser.parseJSON(requestResponse, limits, progress, callback);
 }
 
-function renderDirections() {
+function renderDirections() { 
 	console.log('stopsWaypointFormat: ' + stopsWaypointFormat.length);
 	pushStopsIntoWaypoints(stops);
 	console.log('filtered addresses array: ' + filteredAddressesReq);
