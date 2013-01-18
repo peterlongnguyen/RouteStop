@@ -4,7 +4,7 @@ html
 		block head
 			| <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 			title= title
-			script(type='text/javascript', src='http://code.jquery.com/jquery-1.8.2.min.js')
+			script(type='text/javascript', src='/javascripts/jquery-min.js')
 
 			// jquery mobile
 			// script(type='text/javascript', src='http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js')
@@ -13,14 +13,22 @@ html
 			//- <meta name="viewport" content="width=device-width, initial-scale=1.0">
 			link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.css')
 			link(rel='stylesheet', href='/stylesheets/bootstrap.css')
- 
+
+			script(type='text/javascript', src='/javascripts/jquery-validation-min.js')
+
 			//- link(rel='stylesheet', href='/stylesheets/jquery-ui.css')
 
+			// google analytics
+			script(type='text/javascript', src='/javascripts/google-analytics.js')
+
+			// google maps-related
 			script(type='text/javascript', src='http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false')
 			script(type='text/javascript', src='/javascripts/RouteBoxer_packed.js')
 			script(type='text/javascript', src='/javascripts/gmap.js')
+
 			// jsonify
 			script(type='text/javascript', src='/javascripts/JSON-js-master/json2.js')
+
 			// jquery ui
 			script(type='text/javascript', src='/javascripts/jquery-ui.js')
 

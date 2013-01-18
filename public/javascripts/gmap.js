@@ -1,3 +1,6 @@
+$(document).ready(function(){
+    $("#commentForm").validate();
+});
 
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();

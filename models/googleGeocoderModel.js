@@ -13,8 +13,9 @@ exports.geocode = function(waypt, callback) {
 	})
 }
 
-// actually uses data science tool kit's API instead, as google would instead return arbitrary locations
-// for queries such as 'chevron'
+// actually uses data science tool kit's API instead, as google would instead convert queries
+// such as 'chevron' or 'in-n-out' into arbitrary locations instead of returning an error to signify
+// that it wasn't a valid address
 function GETgeocodingURI(address) {
 	// return 'http://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&sensor=false';
 	// return 'http://www.datasciencetoolkit.org/maps/api/geocode/json?address=' + address + '&sensor=false';

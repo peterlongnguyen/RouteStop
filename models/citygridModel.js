@@ -13,8 +13,10 @@ exports.lookupStops = function(wp, box, req, res, callback) {
 		requests_progress_pct = 0,
 		total_requests = (boxes.length * waypts.length); 
 
+	// begin searching from middle of array, diverging outwards	
+	arrTraverseFromMiddle = traverseFromCenter(boxes);
+
 	// loop through all boxes along path
-	arrTraverseFromMiddle = traverseFromCenter(boxes)
 	for(var i = 0; i < boxes.length; i++) {
 		// Perform search over this boxed bounds
 		// var boundaries = boxes[i];
@@ -89,7 +91,8 @@ function getPercent(dividend, divisor) {
 	return Math.round(100*(quotient.toFixed(4)));
 }
 
-// start from center and work outwards
+// start from center and work outwards. takes an array, traverses that array from center 
+// outwards, adding the index of each subsequent stop to another array, that is returned
 function traverseFromCenter(arr) {
 	var center = Math.floor(arr.length/2) - 1;
 	var index_right = center, index_left = center;
@@ -98,25 +101,23 @@ function traverseFromCenter(arr) {
 	for(i = 0; i < arr.length/2; i++) {
 
 		if(i == 0) { 
-			objCenter = arr[center];
+			// objCenter = arr[center];
 			pushIfDoesntContain(center, tempArr); 
 		}
 
 		if(index_right < arr.length-1) {
 			index_right++;
-			objRight = arr[index_right];
+			// objRight = arr[index_right];
 			pushIfDoesntContain(index_right, tempArr); 
-			// should parse json object on the spot 
 		}			
 
 		if(index_left > 0) {
 			index_left--;
-			objLeft = arr[index_left];
+			// objLeft = arr[index_left];
 			pushIfDoesntContain(index_left, tempArr); 
-			// should parse json object on the spot
 		}
 
-		console.log(objRight + " " + objLeft + " " + objCenter);
+		// console.log(objRight + " " + objLeft + " " + objCenter);
 	}
 	return tempArr;
 }
