@@ -184,12 +184,21 @@ body {
   -webkit-transform:rotate(315deg) translate(0, -40px);opacity:1;
 }
 
-#spinner {
+/*#spinner {
 	visibility: hidden;
 	position: fixed;
 	left: 57.5%;
 	margin-left: -100px;
 	z-index: 1001;
+}*/
+
+#spinner {
+  visibility: hidden;
+  position: fixed;
+  /*left: 57.5%;*/
+  /*margin-left: -100px;*/
+  margin-left: 35px;
+  z-index: 1001;
 }
 
 /* set up the three bar spinners */

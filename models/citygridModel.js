@@ -55,7 +55,8 @@ exports.lookupStops = function(wp, box, req, res, callback) {
 					callback(requestResponse, progressCounters, params);
 				
 				} else {
-					throw 'ERROR: error response from citygrid API';
+					console.log("ERROR FROM CITYGRID: " + response.statusCode)
+					// throw 'ERROR: error response from citygrid API';
 				}
 			})
 		}
@@ -101,23 +102,19 @@ function traverseFromCenter(arr) {
 	for(i = 0; i < arr.length/2; i++) {
 
 		if(i == 0) { 
-			// objCenter = arr[center];
 			pushIfDoesntContain(center, tempArr); 
 		}
 
 		if(index_right < arr.length-1) {
 			index_right++;
-			// objRight = arr[index_right];
 			pushIfDoesntContain(index_right, tempArr); 
 		}			
 
 		if(index_left > 0) {
 			index_left--;
-			// objLeft = arr[index_left];
 			pushIfDoesntContain(index_left, tempArr); 
 		}
 
-		// console.log(objRight + " " + objLeft + " " + objCenter);
 	}
 	return tempArr;
 }

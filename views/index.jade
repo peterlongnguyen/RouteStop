@@ -12,24 +12,39 @@ block append content
 
 	div#outerbox
 		div#innerbox
+			| <center>
+			div#spinner
+				| <div id="div1">
+				|  <div class="bar1"></div>
+				|  <div class="bar2"></div>
+				|  <div class="bar3"></div>
+				|  <div class="bar4"></div>
+				|  <div class="bar5"></div>
+				|  <div class="bar6"></div>
+				|  <div class="bar7"></div>
+				|  <div class="bar8"></div>
+				| </div>
+			| </center>
 			form(method='post', action='citygrid', id='route', class='navbar-form pull-left')
 				span.form_label
 					label(for='start') Start:
 				span.form_input
-					input(type='text', name='start', id='start', value='los angeles')  
+					input(type='text', name='start', id='start', placeholder='los angeles')  
 				div.form_label     
 					label(for='end') End:
 				div.form_input
-					input(type='text', name='end', id='end', value='san francisco')
+					input(type='text', name='end', id='end', placeholder='san francisco')
 				div.form_label
 					label(for='stop') Stop: 
 							
 				div.form_input
-					div.input-prepend
-						span.add-on
-							a#categories
-								i.icon-list
-						input(type='text', name='place', id='place', value='in-n-out burger', style='width:180px')
+					input(type='text', name='place', id='place', placeholder='in-n-out burger')
+
+					//- div.input-prepend
+					//- 	span.add-on
+					//- 		a#categories
+					//- 			i.icon-list
+					//- 	input(type='text', name='place', id='place', placeholder='in-n-out burger', style='width:180px')
 
 				div.form_label
 					input(type='hidden', name='params', id='params')
@@ -46,17 +61,7 @@ block append content
 
 	div#grayout
 
-	div#spinner
-		| <div id="div1">
-		|  <div class="bar1"></div>
-		|  <div class="bar2"></div>
-		|  <div class="bar3"></div>
-		|  <div class="bar4"></div>
-		|  <div class="bar5"></div>
-		|  <div class="bar6"></div>
-		|  <div class="bar7"></div>
-		|  <div class="bar8"></div>
-		| </div>
+	
 
 	div#directions_panel
 
